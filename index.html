@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050505">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Rose — an AI front desk for your website · Wildrose Automations</title>
+  <meta name="description" content="Rose answers questions, captures quote requests and sends the lead to you by chat or voice, while the visitor is still on your site. Set up for you, from CA$39/month.">
+  <link rel="canonical" href="https://wildroseautomations.ca/">
+  <link rel="icon" href="https://wildroseautomations.ca/logos/wildrose.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Wildrose Automations">
+  <meta property="og:url" content="https://wildroseautomations.ca/">
+  <meta property="og:title" content="Rose — give your website a front desk">
+  <meta property="og:description" content="Rose answers questions, captures quote requests and sends the lead to you, while the visitor is still on the page.">
+  <meta property="og:image" content="https://wildroseautomations.ca/assets/rose-voice-reference.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="rose-appearance.css?v=calm-1">
+  <style>
+    :root{
+      --bg:#050505;--bg-2:#0a0908;--surface:#100d0c;--surface-2:#16110f;
+      --line:rgba(255,236,222,.08);--line-2:rgba(255,236,222,.14);
+      --text:#f6efe8;--muted:rgba(246,239,232,.62);--faint:rgba(246,239,232,.42);
+      --orange:#ff5722;--orange-2:#ff8a4c;--peach:#ffc4a1;--cream:#f3e3d3;
+      --ink:#1b1410;--ink-2:#4a3d35;
+      --glass:radial-gradient(ellipse at 2% 0%,rgba(255,255,255,.4),transparent 52%),linear-gradient(135deg,rgba(232,226,221,.95),rgba(196,174,160,.93) 35%,rgba(197,187,179,.95) 69%,rgba(178,168,160,.94));
+      --radius:24px;--wrap:1200px;
+      --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      --serif:"Instrument Serif",Georgia,serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:clip}
+    a{color:inherit}
+    img{max-width:100%;display:block}
+    button,input{font:inherit}
+    :focus-visible{outline:2px solid var(--peach);outline-offset:3px}
+    h1,h2,h3{text-wrap:balance}
+    .wrap{width:min(var(--wrap),100% - 40px);margin-inline:auto}
+    .serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+    .grad{background:linear-gradient(100deg,#ffd6bb 0%,#ff9a62 45%,#ff5722 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;margin:0;color:var(--orange-2);font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
+    .display{margin:18px 0 0;font-family:var(--serif);font-weight:400;font-style:normal;text-transform:uppercase;letter-spacing:-.005em;line-height:.9;color:var(--cream);font-size:clamp(46px,7vw,104px)}
+    .display em{font-style:normal;color:var(--orange)}
+    .lead{margin:22px 0 0;color:var(--muted);font-size:clamp(17px,1.5vw,20px);line-height:1.55;max-width:560px}
+    .center{text-align:center}.center .lead{margin-inline:auto}
+    .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;border:1px solid transparent;text-decoration:none;font-size:15px;font-weight:650;letter-spacing:-.01em;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease;white-space:nowrap}
+    .btn-primary{background:var(--orange);color:#fff;box-shadow:0 10px 30px -8px rgba(255,87,34,.6),inset 0 1px 0 rgba(255,255,255,.25)}
+    .btn-primary:hover{background:#ff6a3a;transform:translateY(-1px);box-shadow:0 16px 36px -8px rgba(255,87,34,.7),inset 0 1px 0 rgba(255,255,255,.25)}
+    .btn-ghost{background:rgba(255,255,255,.04);border-color:var(--line-2);color:var(--text)}
+    .btn-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,236,222,.28)}
+    .btn .arrow{transition:transform .2s ease}.btn:hover .arrow{transform:translateX(3px)}
+
+    /* Header: the ad's lockup, uppercase tracked links, orange pill */
+    .nav{position:fixed;inset:0 0 auto;z-index:50;background:rgba(6,5,5,.6);border-bottom:1px solid rgba(255,236,222,.07);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);transition:background .3s ease}
+    .nav.scrolled{background:rgba(6,5,5,.86)}
+    .nav:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent 10%,rgba(255,108,60,.6) 50%,transparent 90%);pointer-events:none}
+    .nav-inner{display:flex;align-items:center;gap:32px;width:min(1240px,100% - 48px);height:78px;margin:auto}
+    .nav-brand{display:flex;align-items:center;gap:12px;flex:none;text-decoration:none}
+    .nav-brand img{width:36px;height:36px;object-fit:contain}
+    .nav-brand b{display:block;font-family:var(--serif);font-weight:400;font-size:22px;letter-spacing:.22em;line-height:1;color:var(--cream)}
+    .nav-brand span{display:block;margin-top:5px;font-size:8.5px;font-weight:600;letter-spacing:.55em;color:rgba(246,239,232,.55)}
+    .nav-links{display:flex;gap:34px;margin:0 auto}
+    .nav-links a{position:relative;padding:10px 0;color:rgba(246,239,232,.62);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;transition:color .2s ease}
+    .nav-links a:after{content:"";position:absolute;left:50%;bottom:-2px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px var(--orange);opacity:0;transform:scale(0);transition:opacity .25s ease,transform .25s ease}
+    .nav-links a:hover,.nav-links a.on{color:var(--text)}
+    .nav-links a.on:after{opacity:1;transform:none}
+    .nav-actions{display:flex;align-items:center;gap:24px;flex:none}
+    .nav-login{color:rgba(246,239,232,.72);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;transition:color .2s ease}
+    .nav-login:hover{color:var(--text)}
+    .nav-cta{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:999px;background:linear-gradient(180deg,#fa7135,#ee511b);color:#fff;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;box-shadow:0 10px 28px -10px rgba(255,87,34,.85),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .2s ease,box-shadow .2s ease}
+    .nav-cta:hover{transform:translateY(-1px);box-shadow:0 14px 34px -10px rgba(255,87,34,.95),inset 0 1px 0 rgba(255,255,255,.3)}
+    .nav-links a:focus-visible,.nav-login:focus-visible,.nav-cta:focus-visible,.nav-brand:focus-visible{outline:2px solid var(--peach);outline-offset:4px;border-radius:4px}
+
+    /* Hero: the brand ad, live */
+    .hero{position:relative;padding:118px 0 100px;overflow:hidden;isolation:isolate;text-align:center}
+    .hero:before{content:"";position:absolute;left:50%;top:52%;width:1100px;height:900px;transform:translate(-50%,-30%);z-index:-2;background:radial-gradient(ellipse 50% 45% at 50% 50%,rgba(255,87,34,.24),transparent 70%);pointer-events:none}
+    .hero-title{margin:18px auto 0;max-width:1240px;font-size:clamp(58px,8.2vw,128px);line-height:.86}
+    .hero-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"copy stage chips";align-items:center;gap:52px;margin-top:26px}
+    .hero-waves{position:absolute;left:50%;top:50%;z-index:-1;width:100vw;height:640px;transform:translate(-50%,-50%);pointer-events:none}
+    .hero-copy{grid-area:copy;text-align:left;max-width:360px;justify-self:end}
+    .hero-copy .lead{margin:0;font-size:18px;color:rgba(246,239,232,.78)}
+    .hero-copy .lead strong{color:var(--text);font-weight:600}
+    .try{margin-top:28px}
+    .try-bar{display:flex;align-items:center;gap:10px;padding:0 18px;border:1px solid var(--line-2);border-radius:16px;background:rgba(14,11,10,.82);transition:border-color .2s ease,box-shadow .2s ease;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+    .try-bar:focus-within{border-color:rgba(255,138,76,.65);box-shadow:0 0 0 4px rgba(255,87,34,.14)}
+    .try-bar svg{flex:none;color:var(--faint)}
+    .try-bar input{flex:1;min-width:0;height:54px;border:0;outline:0;background:transparent;color:var(--text);font-size:16px}
+    .try-bar input::placeholder{color:var(--faint)}
+    .try-cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:10px;min-height:56px;border:0;border-radius:999px;background:linear-gradient(180deg,#fa7135,#ee511b);color:#fff;font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;box-shadow:0 16px 40px -12px rgba(255,87,34,.75),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .2s ease,box-shadow .2s ease}
+    .try-cta:hover{transform:translateY(-1px);box-shadow:0 22px 50px -12px rgba(255,87,34,.9),inset 0 1px 0 rgba(255,255,255,.3)}
+    .try-note{margin:12px 0 0;color:var(--faint);font-size:13px;text-align:center}
+    .hero-stage{grid-area:stage;position:relative;display:grid;place-items:center;min-width:0}
+    .hero-stage:before{content:"";position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(255,87,34,.36),transparent 62%);filter:blur(24px);pointer-events:none}
+    #liveRoseVoice{position:relative;z-index:2;display:flex;justify-content:center;width:430px;max-width:100%;min-height:560px}
+    #liveRoseVoice .wr-ai.inline{position:relative;inset:auto;margin:auto}
+    #liveRoseVoice .wr-ai.inline .wr-panel{position:relative;right:auto;bottom:auto}
+    #liveRoseVoice .wr-fab,#liveRoseVoice .wr-close{display:none!important}
+    #liveRoseVoice main{padding:0}
+    .hero-chips{grid-area:chips;display:grid;gap:12px;justify-items:start;justify-self:start}
+    .chip{display:inline-flex;align-items:center;gap:12px;padding:13px 20px;border:1px solid rgba(255,108,60,.6);border-radius:10px;background:rgba(5,5,5,.66);color:var(--orange-2);font-size:13px;font-weight:650;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+    .hero-facts{display:grid;gap:8px;margin:18px 0 0 4px;padding:0;list-style:none;color:var(--muted);font-size:14px;text-align:left}
+    .hero-facts li{display:flex;align-items:center;gap:10px}
+    .hero-facts li:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--orange)}
+    /* Inline preview */
+    .preview[hidden]{display:none}
+    .preview{width:min(1200px,100% - 40px);margin:0 auto 40px;overflow:hidden;border:1px solid var(--line-2);border-radius:22px;background:#fbf7f1;box-shadow:0 40px 100px -30px rgba(0,0,0,.9);scroll-margin-top:96px}
+    .preview-bar{display:flex;align-items:center;gap:14px;min-height:50px;padding:8px 16px;background:#17110e;color:var(--text);font-size:13px;border-bottom:1px solid var(--line)}
+    .preview-dots{display:flex;gap:6px}.preview-dots i{width:10px;height:10px;border-radius:50%;background:#3a2c25}
+    .preview-bar strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+    .preview-bar button{margin-left:auto;flex:none;padding:6px 14px;border:1px solid var(--line-2);border-radius:999px;background:transparent;color:var(--text);font-size:12px;cursor:pointer}
+    .preview iframe{display:block;width:100%;height:min(1050px,88vh);min-height:610px;border:0;background:#fbf7f1}
+
+    /* Night shift */
+    .night{position:relative;border-top:1px solid var(--line)}
+    .night-sticky{position:relative;overflow:hidden;isolation:isolate;padding:120px 0}
+    .sky{position:absolute;inset:0;z-index:-1;pointer-events:none}
+    .sky i{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
+    .sky .dusk{opacity:1;background:radial-gradient(ellipse 80% 60% at 20% 110%,rgba(255,87,34,.28),transparent 60%)}
+    .sky .night-sky{background:radial-gradient(ellipse 70% 60% at 80% -10%,rgba(80,100,170,.16),transparent 65%)}
+    .sky .dawn{background:radial-gradient(ellipse 90% 70% at 80% 115%,rgba(255,150,80,.32),transparent 60%)}
+    .stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 12% 18%,#fff8,transparent),radial-gradient(1px 1px at 28% 42%,#fff6,transparent),radial-gradient(1.4px 1.4px at 46% 12%,#fff9,transparent),radial-gradient(1px 1px at 63% 30%,#fff5,transparent),radial-gradient(1.2px 1.2px at 78% 8%,#fff8,transparent),radial-gradient(1px 1px at 88% 36%,#fff5,transparent),radial-gradient(1px 1px at 8% 60%,#fff4,transparent),radial-gradient(1.3px 1.3px at 54% 54%,#fff5,transparent),radial-gradient(1px 1px at 93% 64%,#fff4,transparent),radial-gradient(1px 1px at 36% 74%,#fff3,transparent);opacity:0;transition:opacity .8s ease}
+    .night-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:64px;align-items:center}
+    .night .display{font-size:clamp(44px,5.6vw,84px)}
+    .clock-big{display:flex;align-items:baseline;gap:14px;margin-top:38px;font-variant-numeric:tabular-nums}
+    .clock-big b{font-size:clamp(72px,9vw,132px);font-weight:600;letter-spacing:-.06em;line-height:.9;color:var(--text)}
+    .clock-big span{font-size:clamp(20px,2vw,28px);font-weight:600;color:var(--orange-2);letter-spacing:.04em}
+    .ticks{display:flex;gap:6px;margin-top:28px;max-width:420px}
+    .ticks button{flex:1;padding:12px 0 0;border:0;border-top:2px solid rgba(255,255,255,.12);background:none;color:var(--faint);font-size:12px;font-weight:600;text-align:left;cursor:pointer;transition:color .3s ease,border-color .3s ease}
+    .ticks button.on{color:var(--text);border-color:var(--orange)}
+    .device{position:relative;border:1px solid var(--line-2);border-radius:22px;background:#0d0a09;box-shadow:0 50px 120px -40px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.02);overflow:hidden}
+    .device-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);color:var(--faint);font-size:12px}
+    .device-bar i{width:9px;height:9px;border-radius:50%;background:#2c221d}
+    .device-bar span{margin-left:10px;padding:4px 12px;border-radius:8px;background:rgba(255,255,255,.04)}
+    .device-body{position:relative;height:440px;padding:24px;background:linear-gradient(180deg,#120e0c,#0b0908)}
+    .skel{display:grid;gap:10px;max-width:56%}
+    .skel i{display:block;height:12px;border-radius:6px;background:rgba(255,255,255,.05)}
+    .skel i:nth-child(1){height:26px;width:80%;background:rgba(255,255,255,.08)}
+    .skel i:nth-child(4){width:60%}.skel i:nth-child(5){height:90px;margin-top:10px}
+    .scene{position:absolute;right:20px;bottom:20px;width:min(330px,calc(100% - 40px));opacity:0;transform:translateY(16px) scale(.98);transition:opacity .2s ease,transform .2s ease;pointer-events:none}
+    .scene.on{opacity:1;transform:none;transition:opacity .45s ease .2s,transform .55s cubic-bezier(.2,.7,.2,1) .2s}
+    .mini{padding:14px;border:1px solid rgba(255,242,232,.7);border-radius:22px;background:var(--glass);color:var(--ink);box-shadow:0 30px 60px -20px rgba(0,0,0,.8),0 0 30px rgba(224,89,34,.15)}
+    .mini-head{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+    .mini-head img{width:28px;height:28px;padding:4px;border-radius:9px;background:rgba(255,255,255,.6)}
+    .mini-head strong{display:block;font-size:13px;line-height:1.1}
+    .mini-head small{font-size:10.5px;color:var(--ink-2)}
+    .mini-head .live{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:650;color:#7a3b1c}
+    .mini-head .live:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px var(--orange)}
+    .bub{width:fit-content;max-width:86%;margin-top:7px;padding:9px 12px;border-radius:14px;font-size:12.5px;line-height:1.4}
+    .bub.v{margin-left:auto;background:rgba(255,255,255,.62);border-bottom-right-radius:4px}
+    .bub.r{background:linear-gradient(135deg,#ff6a35,#f04e1a);color:#fff;border-bottom-left-radius:4px}
+    .orb-row{display:flex;align-items:center;gap:12px;padding:6px 2px}
+    .orb-sm{flex:none;width:54px;height:54px;border-radius:50%;background:#c96c49 url('assets/rose-voice-reference.jpg') 50.93% 43.69%/482% auto;border:1px solid rgba(255,225,205,.8);box-shadow:0 0 22px rgba(255,87,34,.45);animation:pulse 2.4s ease-in-out infinite}
+    @keyframes pulse{50%{box-shadow:0 0 34px rgba(255,87,34,.7);transform:scale(1.04)}}
+    .wave-sm{display:flex;align-items:center;gap:3px;height:24px}
+    .wave-sm i{width:3px;border-radius:3px;background:#e2531f;animation:bar 1.1s ease-in-out infinite;animation-delay:calc(var(--i)*-80ms)}
+    @keyframes bar{0%,100%{height:4px;opacity:.5}50%{height:20px;opacity:1}}
+    .captured{display:flex;align-items:center;gap:8px;margin-top:10px;padding:9px 11px;border-radius:12px;background:rgba(27,20,16,.88);color:#fff;font-size:12px}
+    .captured b{color:#86efac;font-weight:650}
+    .morning{display:grid;gap:8px}
+    .phone-note{display:flex;gap:11px;align-items:flex-start;padding:13px;border:1px solid var(--line-2);border-radius:18px;background:rgba(32,25,21,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--text);font-size:12.5px;box-shadow:0 20px 40px -20px #000}
+    .phone-note img{flex:none;width:30px;height:30px;padding:5px;border-radius:9px;background:var(--orange)}
+    .phone-note strong{display:block;font-size:13px}
+    .phone-note span{color:var(--muted)}
+    .phone-note time{margin-left:auto;color:var(--faint);font-size:11px;white-space:nowrap}
+    .night-static .scene{position:relative;right:auto;bottom:auto;width:100%;opacity:1;transform:none;margin-bottom:14px}
+    .night-static .device-body{height:auto}
+    .night-static .skel{display:none}
+
+    /* Lead demo */
+    section.block{padding:150px 0 0}
+    .section-head{max-width:820px;margin-bottom:64px}
+    .section-head.center{margin-inline:auto}
+    .capture{display:grid;grid-template-columns:minmax(0,1fr) 90px minmax(0,1fr);align-items:center;max-width:1080px;margin:auto}
+    .glass-panel{position:relative;padding:20px;border:1px solid rgba(255,242,232,.75);border-radius:32px;background:var(--glass);color:var(--ink);box-shadow:0 40px 90px -30px rgba(0,0,0,.9),0 0 50px rgba(224,89,34,.14),inset 0 1px 1px rgba(255,255,255,.8);min-height:470px}
+    .glass-panel .mini-head{margin-bottom:16px}
+    .glass-panel .mini-head img{width:34px;height:34px}
+    .glass-panel .mini-head strong{font-size:15px}
+    .tabs{display:grid;grid-template-columns:1fr 1fr;padding:3px;margin-bottom:14px;border:1px solid rgba(255,255,255,.55);border-radius:12px;background:rgba(234,225,218,.18);font-size:12.5px;font-weight:700;text-align:center;color:#554d46}
+    .tabs span{padding:7px 0;border-radius:9px}
+    .tabs span:first-child{background:linear-gradient(145deg,rgba(251,245,239,.85),rgba(239,228,219,.6));color:var(--ink);box-shadow:0 2px 5px rgba(38,25,18,.1)}
+    .convo{display:flex;flex-direction:column;gap:2px;min-height:330px}
+    .convo .bub{font-size:13.5px;animation:pop .4s cubic-bezier(.2,.7,.2,1) both}
+    .convo mark{background:rgba(255,87,34,.22);color:inherit;border-radius:4px;padding:0 3px;box-shadow:0 0 0 1px rgba(255,87,34,.35)}
+    .typing{display:inline-flex;gap:4px;padding:12px 14px!important}
+    .typing i{width:6px;height:6px;border-radius:50%;background:#fff;opacity:.6;animation:dot 1s infinite}
+    .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+    @keyframes dot{50%{opacity:1;transform:translateY(-3px)}}
+    @keyframes pop{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
+    .beam{position:relative;height:2px;margin:0 10px;background:linear-gradient(90deg,rgba(255,138,76,.1),rgba(255,138,76,.5),rgba(255,138,76,.1))}
+    .beam:after{content:"";position:absolute;top:-3px;left:0;width:22px;height:8px;border-radius:8px;background:radial-gradient(closest-side,#ffe0c8,transparent);animation:travel 1.8s ease-in-out infinite}
+    @keyframes travel{to{left:calc(100% - 22px)}}
+    .ticket{position:relative;padding:28px;border:1px solid var(--line-2);border-radius:28px;background:linear-gradient(170deg,#1a1210,#0d0a09 60%);box-shadow:0 40px 90px -40px rgba(255,87,34,.35)}
+    .ticket:before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(160deg,rgba(255,138,76,.6),transparent 40%,rgba(255,87,34,.25));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+    .ticket-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .ticket-top p{margin:0;color:var(--faint);font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+    .ticket h3{margin:6px 0 22px;font-family:var(--serif);font-weight:400;font-size:38px;text-transform:uppercase;line-height:1;color:var(--cream)}
+    .status{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.05);color:var(--faint);font-size:12px;font-weight:650;transition:all .4s ease}
+    .status:before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+    .status.sent{background:rgba(74,222,128,.12);color:#86efac}
+    .field{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--line);font-size:14.5px}
+    .field span{color:var(--faint)}
+    .field b{position:relative;min-height:22px;font-weight:550;color:var(--text)}
+    .field b:empty:after{content:"";position:absolute;left:0;top:50%;width:70%;height:8px;margin-top:-4px;border-radius:4px;background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.09),rgba(255,255,255,.04));background-size:200% 100%;animation:shimmer 1.6s linear infinite}
+    @keyframes shimmer{to{background-position:-200% 0}}
+    .field.fill b{animation:flash 1s ease}
+    @keyframes flash{0%{color:var(--orange-2);text-shadow:0 0 18px rgba(255,138,76,.8)}100%{color:var(--text)}}
+    .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;max-width:1080px;margin:90px auto 0;padding-top:40px;border-top:1px solid var(--line)}
+    .fact{display:flex;gap:16px}
+    .fact .orb-xs{flex:none;width:34px;height:34px;border-radius:50%;background:#c96c49 url('assets/rose-voice-reference.jpg') 50.93% 43.69%/482% auto;border:1px solid rgba(255,225,205,.6);box-shadow:0 0 16px rgba(255,87,34,.4)}
+    .fact h3{margin:2px 0 6px;font-size:17px;font-weight:650;letter-spacing:-.02em}
+    .fact p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55}
+
+    /* Your look */
+    .look{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center}
+    .swatch-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+    .swatch{position:relative;width:44px;height:44px;border-radius:50%;border:2px solid transparent;background:var(--c);cursor:pointer;transition:transform .2s ease,border-color .2s ease}
+    .swatch:hover{transform:scale(1.08)}
+    .swatch[aria-pressed="true"]{border-color:var(--c);box-shadow:inset 0 0 0 3px var(--bg)}
+    .look-note{margin:18px 0 0;color:var(--faint);font-size:13.5px}
+    .look-stage{position:relative;display:grid;place-items:center;min-height:520px}
+    .look-stage:before{content:"";position:absolute;width:min(460px,100vw);height:460px;border-radius:50%;background:radial-gradient(circle,var(--tint-glow,rgba(255,87,34,.35)),transparent 62%);filter:blur(10px);transition:background .6s ease}
+    .look-card{position:relative;width:340px;padding:18px 18px 26px;border:1px solid rgba(255,242,232,.75);border-radius:34px;background:var(--glass);color:var(--ink);text-align:center;box-shadow:0 40px 90px -30px rgba(0,0,0,.9),inset 0 1px 1px rgba(255,255,255,.8)}
+    .look-card .mini-head{text-align:left}
+    .big-orb{position:relative;width:170px;height:170px;margin:26px auto 20px;border-radius:50%;overflow:hidden;background:#c96c49 url('assets/rose-voice-reference.jpg') 50.93% 43.69%/482% auto;border:1px solid rgba(255,225,205,.85);box-shadow:0 18px 40px -10px rgba(153,60,26,.5)}
+    .big-orb:after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--tint,transparent);mix-blend-mode:color;opacity:var(--tint-o,0);transition:background .5s ease,opacity .5s ease}
+    .look-card h3{margin:0;font-size:20px;font-weight:750;letter-spacing:-.04em}
+    .look-card p{margin:6px 0 18px;font-size:13px;color:var(--ink-2)}
+    .look-btn{display:inline-block;padding:11px 22px;border-radius:999px;background:var(--btn,#f35b22);color:#fff;font-size:14px;font-weight:750;box-shadow:0 8px 20px -6px var(--btn,#f35b22);transition:background .5s ease,box-shadow .5s ease}
+
+    /* Steps */
+    .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:s}
+    .step{position:relative;padding:34px 30px 32px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);counter-increment:s}
+    .step:before{content:"0" counter(s);display:block;margin-bottom:44px;font-family:var(--serif);font-style:italic;font-size:56px;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(255,138,76,.55)}
+    .step h3{margin:0;font-size:21px;font-weight:650;letter-spacing:-.03em}
+    .step p{margin:10px 0 0;color:var(--muted);font-size:15px;line-height:1.55}
+    .step em{font-style:normal;color:var(--peach)}
+
+    /* Pricing: Rose's copper glass */
+    .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:940px;margin:auto}
+    .plan{position:relative;display:flex;flex-direction:column;padding:36px;border:1px solid rgba(255,242,232,.7);border-radius:34px;background:var(--glass);color:var(--ink);box-shadow:0 40px 90px -40px rgba(0,0,0,.9),inset 0 1px 1px rgba(255,255,255,.85)}
+    .plan.pro{box-shadow:0 40px 100px -30px rgba(255,87,34,.55),0 0 0 2px rgba(255,108,60,.9),inset 0 1px 1px rgba(255,255,255,.85)}
+    .plan .badge{position:absolute;top:34px;right:34px;padding:6px 12px;border-radius:999px;background:var(--orange);color:#fff;font-size:12px;font-weight:700}
+    .plan h3{margin:0;font-family:var(--serif);font-weight:400;font-size:34px;text-transform:uppercase;line-height:1}
+    .price{display:flex;align-items:baseline;gap:8px;margin:22px 0 6px}
+    .price b{font-size:68px;font-weight:700;letter-spacing:-.06em;line-height:1}
+    .price b sup{font-size:.32em;font-weight:650;vertical-align:top;margin-right:4px;letter-spacing:0;position:relative;top:.6em;color:var(--ink-2)}
+    .price span{color:var(--ink-2);font-weight:550}
+    .plan .desc{margin:0;color:var(--ink-2);font-size:15px}
+    .plan ul{display:grid;gap:13px;margin:28px 0 34px;padding:26px 0 0;border-top:1px solid rgba(27,20,16,.14);list-style:none;font-size:15px;font-weight:500}
+    .plan li{display:flex;gap:12px;align-items:flex-start}
+    .plan li svg{flex:none;margin-top:3px;color:#d9461a}
+    .plan .btn{margin-top:auto;width:100%}
+    .plan .btn-dark{background:var(--ink);color:#fff}
+    .plan .btn-dark:hover{background:#000;transform:translateY(-1px)}
+    .fine{margin:28px auto 0;max-width:640px;text-align:center;color:var(--faint);font-size:13.5px;line-height:1.6}
+
+    /* FAQ */
+    .faq{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px;align-items:start}
+    .faq .section-head{position:sticky;top:120px;margin:0}
+    .faq-list{border-top:1px solid var(--line)}
+    .faq details{border-bottom:1px solid var(--line)}
+    .faq summary{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:26px 0;cursor:pointer;list-style:none;font-size:18px;font-weight:600;letter-spacing:-.02em}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq summary .pm{position:relative;flex:none;width:32px;height:32px;border:1px solid var(--line-2);border-radius:50%;transition:background .3s ease}
+    .faq summary .pm:before,.faq summary .pm:after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.5px;background:var(--peach);transform:translate(-50%,-50%)}
+    .faq summary .pm:after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .3s ease}
+    .faq details[open] .pm{background:rgba(255,87,34,.14)}
+    .faq details[open] .pm:after{transform:translate(-50%,-50%) rotate(0)}
+    .faq details p{margin:-8px 0 26px;max-width:620px;color:var(--muted);font-size:16px;line-height:1.65}
+
+    /* Final: the ad's sign-off */
+    .final{position:relative;margin-top:170px;padding:130px 24px 110px;border-top:1px solid var(--line);text-align:center;overflow:hidden;isolation:isolate}
+    .final canvas{position:absolute;inset:0;z-index:-1;width:100%;height:100%}
+    .final:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 40% 50% at 50% 45%,rgba(5,5,5,.85),transparent 75%);pointer-events:none}
+    .final .display{margin:22px auto 0;max-width:1100px;font-size:clamp(54px,9vw,150px)}
+    .big-cta{display:inline-flex;align-items:center;justify-content:center;gap:12px;margin-top:52px;padding:24px 48px;border-radius:999px;background:linear-gradient(180deg,#fa7135,#ee511b);color:#fff;text-decoration:none;font-size:clamp(16px,1.7vw,21px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 20px 60px -12px rgba(255,87,34,.75),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .2s ease,box-shadow .2s ease}
+    .big-cta:hover{transform:translateY(-2px);box-shadow:0 26px 70px -12px rgba(255,87,34,.9),inset 0 1px 0 rgba(255,255,255,.3)}
+    .final .alt{display:block;margin-top:22px;color:var(--muted);font-size:14px}
+    .final .alt a{color:var(--text)}
+    .lockup{display:inline-flex;align-items:center;gap:16px;margin-top:70px;text-align:left}
+    .lockup img{width:52px;height:52px}
+    .lockup b{display:block;font-family:var(--serif);font-weight:400;font-size:34px;letter-spacing:.2em;line-height:1;color:var(--cream)}
+    .lockup span{display:block;margin-top:6px;font-size:12px;letter-spacing:.5em;color:var(--muted)}
+
+    /* Footer */
+    footer{border-top:1px solid var(--line);padding:64px 0 40px;color:var(--muted);font-size:14px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:750;font-size:17px;letter-spacing:-.02em;color:var(--text)}
+    .brand img{width:30px;height:30px;object-fit:contain}
+    .foot{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:40px}
+    .foot p{margin:16px 0 0;max-width:300px;line-height:1.6}
+    .foot h4{margin:0 0 16px;color:var(--text);font-size:13px;font-weight:650}
+    .foot ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+    .foot a{text-decoration:none;color:var(--muted);transition:color .2s ease}
+    .foot a:hover{color:var(--text)}
+    .foot-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
+
+    /* Real Rose copies inside every example */
+    .rose-copy{pointer-events:none;user-select:none}
+    .rose-copy .wr-panel{animation:none!important}
+    .rose-wrap{position:relative;width:calc(430px*var(--s,.62));height:calc(560px*var(--s,.62));margin-left:auto}
+    .rose-wrap>.wr-ai{position:absolute!important;left:0!important;top:0!important;width:430px!important;margin:0!important;transform:scale(var(--s,.62));transform-origin:top left}
+    .scene.has-rose{width:auto}
+    .scene.has-rose .captured{margin-top:10px;margin-left:auto;width:calc(430px*var(--s,.62))}
+    .rose-copy .wr-msg.user mark{background:rgba(255,255,255,.3);color:inherit;border-radius:4px;padding:0 3px}
+    .rose-copy .wr-typing{display:inline-flex;gap:4px;padding:3px 2px}
+    .rose-copy .wr-typing i{width:6px;height:6px;border-radius:50%;background:#6b5a50;animation:dot 1s infinite}
+    .rose-copy .wr-typing i:nth-child(2){animation-delay:.15s}.rose-copy .wr-typing i:nth-child(3){animation-delay:.3s}
+    .rose-copy .wr-orb{position:relative;overflow:hidden}
+    .orb-tint{position:absolute;inset:0;border-radius:50%;mix-blend-mode:color;background:var(--tint,transparent);opacity:var(--tint-o,0);transition:background .5s ease,opacity .5s ease;pointer-events:none}
+    .capture .rose-copy{margin:0 auto}
+    .rose-copy .wr-compose.is-typing{border-color:color-mix(in srgb,var(--accent) 55%,white);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent),inset 0 1px 0 rgba(255,255,255,.55)}
+    .rose-copy .wr-compose.is-typing .wr-input{caret-color:transparent}
+    .rose-copy .wr-send{transition:transform .15s ease}
+    .rose-copy .wr-send.pressed{transform:scale(.86)}
+    .rose-copy.tinted .wr-primary{background:linear-gradient(145deg,var(--accent),color-mix(in srgb,var(--accent) 78%,black))!important;box-shadow:0 10px 24px -8px var(--accent)!important;border-color:transparent!important}
+    @media(max-width:600px){.scene{--s:.47}}
+
+    /* Brain + zoom in the lead demo */
+    .capture-cam{position:relative;max-width:1180px;margin:0 auto;padding:30px 10px;overflow:hidden;border-radius:30px}
+    .capture-cam:after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(ellipse 60% 55% at var(--vx,50%) var(--vy,80%),transparent 40%,rgba(5,5,5,.85));opacity:0;transition:opacity .7s ease}
+    .capture-cam.zooming:after{opacity:1}
+    .capture{grid-template-columns:minmax(0,1fr) minmax(0,.95fr) minmax(0,1fr)!important;gap:26px!important;max-width:none!important;transition:transform .85s cubic-bezier(.2,.7,.2,1)}
+    .capture.zoom{transform:scale(var(--zoom,1.65))}
+    .capture .glass-panel{min-height:560px}
+    .brain-col{display:flex;flex-direction:column;gap:12px;min-width:0}
+    .brain-label{margin:0;text-align:center;color:var(--orange-2);font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
+    .brain-box{position:relative;height:340px}
+    .brain-box canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+    .brain-box .anatomy-surface{z-index:0}
+    .brain-box #workflowGraph{z-index:1;cursor:grab;touch-action:pan-y}
+    .brain-card{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid #6a3f2c;border-radius:16px;background:linear-gradient(155deg,#2c1a12,#1a110d);box-shadow:0 18px 38px rgba(0,0,0,.3);transition:border-color .3s ease}
+    .brain-card.working{border-color:#ff8a4c}
+    .bc-mark{flex:none;display:grid;place-items:center;width:38px;height:38px;border:1px solid #8d553b;border-radius:11px;background:#fff}
+    .bc-mark img{width:22px;height:22px;object-fit:contain}
+    .bc-top{display:flex;align-items:center;gap:10px;margin:0}
+    .bc-tool{color:#ffd4bb;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .bc-state{margin-left:auto;color:#eeb491;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .brain-card.working .bc-state:before{content:"";display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#ff9560;box-shadow:0 0 0 4px rgba(255,149,96,.15);animation:pulse 1s ease-in-out infinite}
+    .bc-title{margin:4px 0 0;color:#fff5ed;font-size:14.5px;font-weight:650;letter-spacing:-.01em;line-height:1.3}
+    .brain-tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+    .bt{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border:1px solid #3a271e;border-radius:12px;background:#140e0b;opacity:.5;transition:opacity .4s ease,border-color .4s ease,background .4s ease}
+    .bt img{width:20px;height:20px;object-fit:contain}
+    .bt span{font-size:10.5px;font-weight:650;color:#e9cdbb;text-align:center;line-height:1.2}
+    .bt.hot{opacity:1;border-color:#ff8a4c;background:#2d190f}
+    .bt.done{opacity:1;border-color:#6a3f2c}
+    .demo-note{margin:14px 0 0;text-align:center;color:var(--faint);font-size:12px}
+
+    /* Glow showcase: a back-office dashboard */
+    .glow-device{max-width:1080px;margin:0 auto}
+    .dash{position:relative;display:grid;grid-template-columns:200px 1fr;height:540px;overflow:hidden;background:#f7f5f2;color:#1c1917}
+    .dash-side{display:flex;flex-direction:column;gap:4px;padding:20px 14px;border-right:1px solid #e7e2dc;background:#fff}
+    .dash-brand{display:flex;align-items:center;gap:9px;margin:0 6px 18px;font-size:15px;letter-spacing:-.02em}
+    .dash-brand span{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#6366f1,#22d3ee)}
+    .dash-nav{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:#57534e;font-size:13.5px;font-weight:550;transition:background .3s ease,color .3s ease}
+    .dash-nav i{width:16px;height:16px;border-radius:5px;background:#e7e5e4}
+    .dash-nav.on{background:#f1f0ee;color:#1c1917}
+    .dash-nav.on i{background:#6366f1}
+    .dash-main{padding:28px 30px;max-width:620px}
+    .dash-main h4{margin:0 0 18px;font-size:22px;letter-spacing:-.03em}
+    .dash-view{display:none}.dash-view.on{display:block;animation:pop .35s ease both}
+    .dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .dash-stats div,.dash-card{padding:16px;border:1px solid #e7e2dc;border-radius:14px;background:#fff}
+    .dash-stats small,.dash-card small{display:block;color:#78716c;font-size:11.5px;font-weight:600}
+    .dash-stats b{display:block;margin-top:6px;font-size:22px;letter-spacing:-.03em}
+    .dash-chart{display:flex;align-items:flex-end;gap:10px;height:150px;margin-top:16px;padding:18px;border:1px solid #e7e2dc;border-radius:14px;background:#fff}
+    .dash-chart i{flex:1;height:var(--h);border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#818cf8,#6366f1)}
+    .dash-tabs{display:flex;gap:6px;margin-bottom:16px;padding:4px;border-radius:12px;background:#ecebe8;width:fit-content}
+    .dash-tabs span{padding:8px 14px;border-radius:9px;color:#57534e;font-size:13px;font-weight:600}
+    .dash-tabs span.on{background:#fff;color:#1c1917;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+    .dash-pane{display:none}.dash-pane.on{display:block;animation:pop .35s ease both}
+    .dash-card b{display:block;margin-top:6px;font-size:17px}
+    .dash-card span{display:block;margin-top:3px;color:#78716c;font-size:12.5px}
+    .dash-table{border:1px solid #e7e2dc;border-radius:14px;background:#fff;overflow:hidden}
+    .dash-table div{display:grid;grid-template-columns:1.4fr 1fr auto;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid #f0ece7;font-size:13.5px}
+    .dash-table div:first-child{border-top:0}
+    .dash-table em{font-style:normal;padding:6px 12px;border-radius:8px;background:#eef2ff;color:#4338ca;font-size:12px;font-weight:650}
+    .dash-table em.muted{background:#f5f5f4;color:#78716c}
+    .dash-btn{display:inline-block;margin-top:14px;padding:10px 16px;border-radius:10px;background:#1c1917;color:#fff;font-size:13px;font-weight:650}
+    .site-glow{position:absolute;z-index:4;pointer-events:none;border-radius:14px;opacity:0;box-shadow:0 0 28px 4px rgba(255,120,61,.35);transition:left .6s cubic-bezier(.2,.7,.2,1),top .6s cubic-bezier(.2,.7,.2,1),width .6s cubic-bezier(.2,.7,.2,1),height .6s cubic-bezier(.2,.7,.2,1),opacity .4s ease}
+    .site-glow.on{opacity:1}
+    .site-glow:before,.site-glow:after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:2.5px;background:conic-gradient(from var(--orbit),rgba(255,106,53,.12) 0deg,rgba(255,125,68,.32) 65deg,#ff934f 110deg,#ffe4b8 142deg,#ffb66e 160deg,rgba(255,111,57,.2) 205deg,rgba(255,111,57,.12) 245deg,#ffad77 290deg,rgba(255,120,61,.45) 315deg,rgba(255,106,53,.12) 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:orbit 3.6s linear infinite}
+    .site-glow:before{inset:-5px;padding:7px;filter:blur(6px);opacity:.85}
+    .dash-cursor{position:absolute;z-index:6;left:70%;top:70%;opacity:0;pointer-events:none;transition:left .9s cubic-bezier(.3,.6,.2,1),top .9s cubic-bezier(.3,.6,.2,1),opacity .3s ease;filter:drop-shadow(0 3px 6px rgba(0,0,0,.3))}
+    .dash-cursor.on{opacity:1}
+    .dash-cursor:after{content:"";position:absolute;left:-12px;top:-12px;width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,120,61,.9);opacity:0;transform:scale(.4)}
+    .dash-cursor.click:after{animation:clickring .5s ease-out}
+    @keyframes clickring{0%{opacity:1;transform:scale(.4)}100%{opacity:0;transform:scale(1.6)}}
+    .site-rose{position:absolute;right:20px;bottom:20px;z-index:5;--s:.62}
+    .site-rose .rose-wrap{margin:0}
+    @media(max-width:1080px){
+      .capture{grid-template-columns:minmax(0,1fr)!important;max-width:520px!important;margin:0 auto}
+      .brain-box{height:300px}
+    }
+    @media(max-width:860px){
+      .dash{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:700px}
+      .dash-side{flex-direction:row;flex-wrap:wrap;gap:4px;padding:10px;border-right:0;border-bottom:1px solid #e7e2dc}
+      .dash-brand{display:none}
+      .dash-nav{padding:8px 10px;font-size:12px}.dash-nav i{display:none}
+      .dash-main{padding:18px 16px;max-width:none}
+      .dash-main h4{font-size:18px;margin-bottom:12px}
+      .dash-stats b{font-size:16px}.dash-chart{height:90px}
+      .dash-tabs span{padding:7px 9px;font-size:11.5px}
+      .site-rose{--s:.5;right:12px;bottom:12px}
+    }
+
+    /* Rose, all over the page: a guide that follows the visitor and points at things */
+    @property --orbit{syntax:"<angle>";initial-value:0deg;inherits:false}
+    .rose-glow{position:fixed;z-index:40;pointer-events:none;border-radius:var(--gr,24px);opacity:0;transition:opacity .5s ease;box-shadow:0 0 22px 2px rgba(255,120,61,.22)}
+    .rose-glow.on{opacity:1}
+    .rose-glow:before,.rose-glow:after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:2px;background:conic-gradient(from var(--orbit),rgba(255,106,53,.12) 0deg,rgba(255,125,68,.32) 65deg,#ff934f 110deg,#ffe4b8 142deg,#ffb66e 160deg,rgba(255,111,57,.2) 205deg,rgba(255,111,57,.12) 245deg,#ffad77 290deg,rgba(255,120,61,.45) 315deg,rgba(255,106,53,.12) 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:orbit 3.6s linear infinite}
+    .rose-glow:before{inset:-5px;padding:7px;filter:blur(6px);opacity:.85}
+    @keyframes orbit{to{--orbit:360deg}}
+    .rose-guide{position:fixed;right:24px;bottom:24px;z-index:60;display:flex;align-items:flex-end;gap:12px;pointer-events:none;opacity:0;transform:translateY(20px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+    .rose-guide.show{opacity:1;transform:none}
+    .rose-guide.show .rg-orb,.rose-guide.show .rg-bubble.open{pointer-events:auto}
+    .rg-bubble{position:relative;width:300px;padding:14px 16px 15px;border:1px solid rgba(255,242,232,.75);border-radius:22px 22px 6px 22px;background:var(--glass);color:var(--ink);box-shadow:0 24px 60px -18px rgba(0,0,0,.85),0 0 30px rgba(224,89,34,.18),inset 0 1px 1px rgba(255,255,255,.8);opacity:0;transform:translateY(8px) scale(.97);transform-origin:bottom right;transition:opacity .3s ease,transform .3s ease}
+    .rg-bubble.open{opacity:1;transform:none}
+    .rg-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+    .rg-head img{width:22px;height:22px;padding:3px;border-radius:7px;background:rgba(255,255,255,.65)}
+    .rg-head strong{font-size:13px}
+    .rg-head small{font-size:11px;color:var(--ink-2)}
+    .rg-close{margin-left:auto;width:24px;height:24px;border:0;border-radius:50%;background:rgba(27,20,16,.08);color:var(--ink-2);font-size:15px;line-height:1;cursor:pointer}
+    .rg-bubble p{margin:0;min-height:40px;font-size:14px;line-height:1.45;font-weight:500}
+    .rg-bubble p:after{content:"";display:inline-block;width:2px;height:1em;margin-left:2px;vertical-align:-2px;background:#e2531f;animation:blink 1s step-end infinite}
+    .rg-bubble.done p:after{display:none}
+    @keyframes blink{50%{opacity:0}}
+    .rg-orb{position:relative;flex:none;width:68px;height:68px;padding:0;border:1px solid rgba(255,225,205,.85);border-radius:50%;cursor:pointer;background:#c96c49 url('assets/rose-voice-reference.jpg') 50.93% 43.69%/482% auto;box-shadow:0 14px 34px -8px rgba(255,87,34,.7),0 0 0 6px rgba(255,87,34,.12);transition:transform .2s ease}
+    .rg-orb:hover{transform:scale(1.06)}
+    .rg-orb:after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(255,138,76,.55);animation:ring 2.4s ease-out infinite}
+    @keyframes ring{from{transform:scale(.9);opacity:.9}to{transform:scale(1.35);opacity:0}}
+    .rg-orb.talking{animation:pulse 1.2s ease-in-out infinite}
+    .rg-label{position:absolute;right:0;bottom:-22px;width:100%;text-align:center;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--peach);white-space:nowrap}
+    .rose-ans{display:flex;align-items:flex-start;gap:14px;margin:-6px 0 26px}
+    .rose-ans .orb-xs{flex:none;width:34px;height:34px;border-radius:50%;background:#c96c49 url('assets/rose-voice-reference.jpg') 50.93% 43.69%/482% auto;border:1px solid rgba(255,225,205,.6);box-shadow:0 0 16px rgba(255,87,34,.4)}
+    .faq details .rose-ans p{margin:0;max-width:600px;padding:14px 18px;border:1px solid var(--line-2);border-radius:6px 18px 18px 18px;background:linear-gradient(160deg,#1a1210,#110d0b);color:rgba(246,239,232,.82);font-size:15.5px;line-height:1.6}
+    .faq details[open] .rose-ans{animation:pop .4s cubic-bezier(.2,.7,.2,1) both}
+    @media(max-width:600px){
+      .rose-guide{right:14px;bottom:14px;gap:8px}
+      .rg-bubble{width:calc(100vw - 104px);padding:12px 14px}
+      .rg-bubble p{font-size:13.5px;min-height:0}
+      .rg-orb{width:56px;height:56px}
+      .rg-label{display:none}
+    }
+    @media(prefers-reduced-motion:reduce){.rg-bubble p:after{display:none}}
+
+    /* Reveal */
+    .js .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+    .js .reveal.in{opacity:1;transform:none}
+
+    /* Responsive */
+    @media(max-width:1080px){
+      .hero-row{grid-template-columns:minmax(0,1fr);grid-template-areas:"stage" "copy" "chips";gap:36px;margin-top:28px}
+      .hero-stage{grid-template-columns:minmax(0,1fr);width:100%}
+      .hero-waves{top:280px}
+      #liveRoseVoice{width:min(430px,100%);justify-self:center}
+      .hero-copy{justify-self:center;text-align:center;max-width:480px}
+      .hero-chips{justify-self:center;justify-items:center;grid-template-columns:repeat(3,auto);gap:10px}
+      .hero-facts{display:none}
+      .night-grid{grid-template-columns:1fr;gap:28px}
+      .device-body{height:360px}
+      .capture{grid-template-columns:1fr;max-width:520px;gap:0}
+      .beam{width:2px;height:60px;margin:0 auto;background:linear-gradient(180deg,rgba(255,138,76,.1),rgba(255,138,76,.5),rgba(255,138,76,.1))}
+      .beam:after{left:-3px;top:0;width:8px;height:22px;animation-name:travel-y}
+      @keyframes travel-y{to{top:calc(100% - 22px)}}
+      .look{grid-template-columns:1fr;gap:20px}
+      .faq{grid-template-columns:1fr;gap:40px}
+      .faq .section-head{position:static}
+      .foot{grid-template-columns:1fr 1fr 1fr}
+      .foot>div:first-child{grid-column:1/-1}
+    }
+    @media(max-width:860px){
+      .nav-links{display:none}
+      .nav-actions{margin-left:auto}
+      .nav-inner{gap:16px}
+      .steps,.plans,.facts{grid-template-columns:1fr}
+      .plans{max-width:480px}
+      .facts{gap:28px;max-width:520px}
+    }
+    @media(max-width:600px){
+      .hero{padding:112px 0 72px}
+      .hero-title{font-size:clamp(50px,14.5vw,76px)}
+      .hero-stage:before{width:360px;height:360px}
+      .hero-waves{height:520px}
+      #liveRoseVoice{min-height:540px}
+      .hero-chips{grid-template-columns:1fr;justify-items:center}
+      .chip{font-size:11.5px;padding:11px 16px}
+      .wrap{width:calc(100% - 32px)}
+      .nav-inner{width:calc(100% - 28px);height:66px}
+      .nav-brand img{width:30px;height:30px}
+      .nav-brand b{font-size:17px;letter-spacing:.18em}
+      .nav-brand span{font-size:7px;letter-spacing:.45em}
+      .nav-login{display:none}
+      .nav-cta{padding:11px 17px;font-size:11px;letter-spacing:.16em}
+      .night .display{font-size:44px}
+      .clock-big b{font-size:64px}
+      .device-body{height:330px;padding:16px}
+      .scene{right:12px;bottom:12px;width:calc(100% - 24px)}
+      section.block{padding-top:110px}
+      .section-head{margin-bottom:44px}
+      .glass-panel{min-height:430px;padding:16px;border-radius:26px}
+      .ticket{padding:22px}
+      .field{grid-template-columns:86px 1fr;font-size:14px}
+      .look-stage{min-height:440px}
+      .look-card{width:300px}
+      .plan{padding:28px 24px}
+      .plan .badge{top:28px;right:24px}
+      .final{margin-top:120px;padding:100px 16px 90px}
+      .big-cta{padding:20px 30px;letter-spacing:.1em}
+      .lockup b{font-size:26px}
+      .foot{grid-template-columns:1fr 1fr}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*:before,*:after{animation:none!important;transition:none!important}
+      .js .reveal{opacity:1;transform:none}
+    }
+  </style>
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#top" aria-label="Wildrose Automations, home"><img src="https://wildroseautomations.ca/logos/wildrose.png" width="36" height="36" alt=""><span aria-hidden="true"><b>WILDROSE</b><span>AUTOMATIONS</span></span></a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="#night">Product</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-login" href="https://workground.wildroseautomations.ca/login.html">Log in</a>
+        <a class="nav-cta" href="https://wildroseautomations.ca/configure/">Get Rose <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="hero" aria-labelledby="heroTitle">
+      <div class="wrap">
+        <p class="eyebrow reveal">Introducing Rose</p>
+        <h1 class="display hero-title reveal" id="heroTitle" style="--d:.06s">Your website just got <em>a voice.</em></h1>
+        <div class="hero-row">
+          <canvas class="hero-waves" id="heroWaves" aria-hidden="true"></canvas>
+          <div class="hero-copy reveal" style="--d:.2s">
+            <p class="lead"><strong>Rose is the AI front desk for your website.</strong> She answers questions, captures quote requests and sends the lead to you, while the visitor is still on the page.</p>
+            <form class="try" id="try-rose" action="https://wildroseautomations.ca/ai-tool-mockup-final.html" method="get">
+              <label class="sr" for="tryRoseWebsite">Your website address</label>
+              <div class="try-bar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg>
+                <input id="tryRoseWebsite" name="website" type="text" inputmode="url" autocomplete="url" placeholder="yourwebsite.com" required maxlength="2048" aria-describedby="tryRoseNote">
+              </div>
+              <button class="try-cta" type="submit">See Rose on my site <span aria-hidden="true">→</span></button>
+              <p class="try-note" id="tryRoseNote">Free preview in seconds. Nothing is installed.</p>
+            </form>
+          </div>
+          <div class="hero-stage reveal" id="heroStage" style="--d:.12s">
+            <div id="liveRoseVoice" aria-label="Talk to Rose live"></div>
+          </div>
+          <div class="hero-chips reveal" style="--d:.28s">
+            <span class="chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg>Voice agent</span>
+            <span class="chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg>On your website</span>
+            <span class="chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12h3l3-8 4 16 3-8h7"/></svg>Speaks naturally</span>
+            <ul class="hero-facts"><li>Set up for you, no code</li><li>Chat and voice included</li><li>From CA$39/month</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="preview" id="roseSitePreview" aria-label="Rose website preview" hidden>
+      <div class="preview-bar"><span class="preview-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong id="rosePreviewTitle">Building your Rose preview…</strong><button type="button" id="rosePreviewClose" aria-label="Close website preview">Close</button></div>
+      <iframe id="rosePreviewFrame" title="Rose preview for your website" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </section>
+
+    <section class="night" id="night" aria-labelledby="nightTitle">
+      <div class="night-sticky">
+        <div class="sky" aria-hidden="true"><i class="dusk"></i><i class="night-sky"></i><i class="dawn"></i><span class="stars"></span></div>
+        <div class="wrap night-grid">
+          <div class="night-copy">
+            <p class="eyebrow">The night shift</p>
+            <h2 class="display" id="nightTitle">You close at five.<br><em>Rose doesn’t.</em></h2>
+            <p class="lead">Most people browse after hours. Rose answers every one of them, then hands you the leads with your morning coffee.</p>
+            <div class="clock-big" aria-hidden="true"><b id="nsTime">5:00</b><span id="nsAmPm">PM</span></div>
+            <div class="ticks" role="tablist" aria-label="Night shift moments">
+              <button type="button" data-step="0">6:40 PM</button><button type="button" data-step="1">11:47 PM</button><button type="button" data-step="2">2:13 AM</button><button type="button" data-step="3">7:02 AM</button>
+            </div>
+          </div>
+          <div class="device" aria-label="Rose working overnight on a website">
+            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span>yourbusiness.ca</span></div>
+            <div class="device-body">
+              <div class="skel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="scene" data-scene="0">
+                <div class="mini"><div class="mini-head"><img src="https://wildroseautomations.ca/logos/wildrose.png" alt=""><div><strong>Rose</strong><small>AI assistant</small></div><span class="live">Online</span></div>
+                  <div class="bub v">Do you work on weekends?</div>
+                  <div class="bub r">We do! Saturdays 9 to 4. Want me to send a request to the team?</div>
+                </div>
+              </div>
+              <div class="scene" data-scene="1">
+                <div class="mini"><div class="mini-head"><img src="https://wildroseautomations.ca/logos/wildrose.png" alt=""><div><strong>Rose</strong><small>AI assistant</small></div><span class="live">Online</span></div>
+                  <div class="bub v">My tap’s been dripping all week. Can I get a quote?</div>
+                  <div class="bub r">Of course. What’s the best email to reach you?</div>
+                  <div class="captured">✓ Quote request captured · <b>Sent to owner</b></div>
+                </div>
+              </div>
+              <div class="scene" data-scene="2">
+                <div class="mini"><div class="mini-head"><img src="https://wildroseautomations.ca/logos/wildrose.png" alt=""><div><strong>Rose</strong><small>Voice</small></div><span class="live">Talking</span></div>
+                  <div class="orb-row"><span class="orb-sm"></span><div><strong style="font-size:13px">“Hi, I need someone for a furnace check…”</strong><div class="wave-sm"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i><i style="--i:12"></i><i style="--i:13"></i></div></div></div>
+                  <div class="bub r">No problem. Let me grab a few details for the owner.</div>
+                </div>
+              </div>
+              <div class="scene" data-scene="3">
+                <div class="morning">
+                  <div class="phone-note"><img src="https://wildroseautomations.ca/logos/wildrose.png" alt=""><div><strong>New quote request</strong><span>Dripping tap · email included</span></div><time>11:47 PM</time></div>
+                  <div class="phone-note"><img src="https://wildroseautomations.ca/logos/wildrose.png" alt=""><div><strong>Voice request</strong><span>Furnace check · callback wanted</span></div><time>2:13 AM</time></div>
+                  <div class="phone-note"><img src="https://wildroseautomations.ca/logos/wildrose.png" alt=""><div><strong>Good morning ☀︎</strong><span>Rose handled 3 conversations overnight.</span></div><time>7:02 AM</time></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="capture" aria-labelledby="captureTitle">
+      <div class="wrap">
+        <div class="section-head center reveal">
+          <p class="eyebrow">Watch a lead happen</p>
+          <h2 class="display" id="captureTitle">From hello <em>to a real lead.</em></h2>
+          <p class="lead">Rose asks the follow-up questions you would, and fills in the request as she goes. You get the finished lead, not a transcript.</p>
+        </div>
+        <div class="capture-cam reveal" id="captureCam">
+        <div class="capture" id="captureDemo">
+          <div class="glass-panel" aria-label="Example Rose chat">
+            <div class="mini-head"><img src="https://wildroseautomations.ca/logos/wildrose.png" alt=""><div><strong>Rose</strong><small>AI assistant</small></div><span class="live">Online</span></div>
+            <div class="tabs" aria-hidden="true"><span>Chat</span><span>Voice</span></div>
+            <div class="convo" id="convo" aria-live="off"></div>
+          </div>
+          <div class="brain-col">
+            <p class="brain-label">Rose’s brain</p>
+            <div class="brain-box"><canvas class="workflow-graph" id="workflowGraph" aria-hidden="true"></canvas></div>
+            <div class="brain-card" id="brainCard" aria-live="polite"><span class="bc-mark"><img src="https://wildroseautomations.ca/logos/wildrose.png" alt=""></span><div><p class="bc-top"><b class="bc-tool">Rose</b><span class="bc-state">Listening</span></p><p class="bc-title">Understanding the request</p></div></div>
+            <div class="brain-tools" id="brainTools"></div>
+          </div>
+          <div class="ticket" aria-label="Quote request Rose is filling in">
+            <div class="ticket-top"><p>Lead · #0142</p><span class="status" id="leadStatus">Listening</span></div>
+            <h3>Quote request</h3>
+            <div class="field" data-key="service"><span>Service</span><b></b></div>
+            <div class="field" data-key="property"><span>Property</span><b></b></div>
+            <div class="field" data-key="email"><span>Email</span><b></b></div>
+            <div class="field" data-key="name"><span>Name</span><b></b></div>
+            <div class="field" data-key="crm"><span>CRM</span><b></b></div>
+          </div>
+        </div>
+        </div>
+        <p class="demo-note reveal">Illustrated example. The tools Rose connects to depend on your setup.</p>
+        <div class="facts">
+          <div class="fact reveal"><span class="orb-xs" aria-hidden="true"></span><div><h3>Trained on your website</h3><p>Rose reads your public pages, and you correct anything before she goes live.</p></div></div>
+          <div class="fact reveal" style="--d:.08s"><span class="orb-xs" aria-hidden="true"></span><div><h3>Hands off to you</h3><p>If she can’t help, she takes the visitor’s details and passes the request along.</p></div></div>
+          <div class="fact reveal" style="--d:.16s"><span class="orb-xs" aria-hidden="true"></span><div><h3>You stay in control</h3><p>Update facts, greetings and tone anytime in Workground. Your corrections win.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="glow" aria-labelledby="glowTitle">
+      <div class="wrap">
+        <div class="section-head center reveal">
+          <p class="eyebrow">Rose’s glow</p>
+          <h2 class="display" id="glowTitle">She shows them <em>where to go.</em></h2>
+          <p class="lead">Rose can guide your customers through your own dashboard or portal. Ask her how to do something and she lights up each step, one click at a time.</p>
+        </div>
+        <div class="device glow-device reveal" id="glowDemo" aria-label="Rose guiding someone through a business dashboard">
+          <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span>portal.brightside.app/dashboard</span></div>
+          <div class="dash" aria-hidden="true">
+            <aside class="dash-side">
+              <b class="dash-brand"><span></span>Brightside</b>
+              <span class="dash-nav on" data-glow="nav-overview" data-view="overview"><i></i>Overview</span>
+              <span class="dash-nav" data-glow="nav-customers"><i></i>Customers</span>
+              <span class="dash-nav" data-glow="nav-billing" data-view="billing"><i></i>Billing</span>
+              <span class="dash-nav" data-glow="nav-settings" data-view="settings"><i></i>Settings</span>
+            </aside>
+            <div class="dash-main">
+              <div class="dash-view on" data-view="overview">
+                <h4>Good morning, Alex</h4>
+                <div class="dash-stats"><div><small>Revenue</small><b>$48,210</b></div><div><small>Open invoices</small><b>12</b></div><div><small>Customers</small><b>318</b></div></div>
+                <div class="dash-chart"><i style="--h:40%"></i><i style="--h:62%"></i><i style="--h:48%"></i><i style="--h:75%"></i><i style="--h:58%"></i><i style="--h:84%"></i><i style="--h:70%"></i><i style="--h:92%"></i></div>
+              </div>
+              <div class="dash-view" data-view="billing">
+                <h4>Billing</h4>
+                <div class="dash-tabs"><span class="on" data-tab="plan">Plan</span><span>Payment methods</span><span data-tab="invoices" data-glow="tab-invoices">Invoice history</span></div>
+                <div class="dash-pane on" data-pane="plan"><div class="dash-card"><small>Current plan</small><b>Growth · $79/month</b><span>Renews December 1</span></div></div>
+                <div class="dash-pane" data-pane="invoices"><div class="dash-table"><div><span>October 2026</span><span>$79.00</span><em data-glow="dl-oct">Download</em></div><div><span>September 2026</span><span>$79.00</span><em>Download</em></div><div><span>August 2026</span><span>$79.00</span><em>Download</em></div></div></div>
+              </div>
+              <div class="dash-view" data-view="settings">
+                <h4>Settings</h4>
+                <div class="dash-tabs"><span class="on" data-tab="profile">Profile</span><span data-tab="team" data-glow="tab-team">Team</span><span>Notifications</span></div>
+                <div class="dash-pane on" data-pane="profile"><div class="dash-card"><small>Business name</small><b>Brightside Studio</b><span>alex@brightside.app</span></div></div>
+                <div class="dash-pane" data-pane="team"><div class="dash-table"><div><span>Alex Morgan</span><span>Owner</span><em class="muted">You</em></div><div><span>Sam Lee</span><span>Admin</span><em class="muted">Active</em></div></div><span class="dash-btn" data-glow="invite">+ Invite member</span></div>
+              </div>
+            </div>
+            <span class="site-glow" id="siteGlow"></span>
+            <span class="dash-cursor" id="dashCursor"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 2l15 11-6.5 1.2L16 21l-3 1.4-3.4-6.6L4 20z" fill="#fff" stroke="#1b1410" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+            <div class="site-rose" id="siteRose"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="look" aria-labelledby="lookTitle">
+      <div class="wrap look">
+        <div class="reveal">
+          <p class="eyebrow">Rose, made yours</p>
+          <h2 class="display" id="lookTitle">One Rose.<br><em>Your look.</em></h2>
+          <p class="lead">Choose her name, greeting, tone and colour so she feels like part of your team. Try a colour.</p>
+          <div class="swatch-row" role="group" aria-label="Try a colour">
+            <button class="swatch" type="button" style="--c:#ff5722" data-tint="" data-btn="#f35b22" data-glow="rgba(255,87,34,.35)" aria-pressed="true" aria-label="Copper"></button>
+            <button class="swatch" type="button" style="--c:#e94b6a" data-tint="#e94b6a" data-btn="#d63c5d" data-glow="rgba(233,75,106,.35)" aria-pressed="false" aria-label="Rose pink"></button>
+            <button class="swatch" type="button" style="--c:#e3a63b" data-tint="#e3a63b" data-btn="#c98a1f" data-glow="rgba(227,166,59,.35)" aria-pressed="false" aria-label="Gold"></button>
+            <button class="swatch" type="button" style="--c:#22c55e" data-tint="#22c55e" data-btn="#16a34a" data-glow="rgba(34,197,94,.3)" aria-pressed="false" aria-label="Green"></button>
+            <button class="swatch" type="button" style="--c:#3b82f6" data-tint="#3b82f6" data-btn="#2563eb" data-glow="rgba(59,130,246,.35)" aria-pressed="false" aria-label="Blue"></button>
+            <button class="swatch" type="button" style="--c:#a855f7" data-tint="#a855f7" data-btn="#9333ea" data-glow="rgba(168,85,247,.35)" aria-pressed="false" aria-label="Violet"></button>
+          </div>
+          <p class="look-note">Same Rose underneath: chat, voice and lead capture in every colour.</p>
+        </div>
+        <div class="look-stage reveal" id="lookStage" style="--d:.1s">
+          <div class="look-card" aria-hidden="true">
+            <div class="mini-head"><img src="https://wildroseautomations.ca/logos/wildrose.png" alt=""><div><strong>Rose</strong><small>AI assistant</small></div></div>
+            <div class="tabs"><span style="background:none;box-shadow:none;color:#554d46">Chat</span><span style="background:linear-gradient(145deg,rgba(251,245,239,.85),rgba(239,228,219,.6));color:var(--ink);border-radius:9px;box-shadow:0 2px 5px rgba(38,25,18,.1)">Voice</span></div>
+            <div class="big-orb" id="bigOrb"></div>
+            <h3>Ready when you are</h3>
+            <p>Tap start and speak naturally.</p>
+            <span class="look-btn" id="lookBtn">Start talking</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="how-it-works" aria-labelledby="howTitle">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">How it works</p>
+          <h2 class="display" id="howTitle">Live on your site.<br><em>No code.</em></h2>
+          <p class="lead">You don’t have to install Rose yourself. We help get her live and test everything before calling it done.</p>
+        </div>
+        <div class="steps">
+          <div class="step reveal"><h3>Enter your website</h3><p>Rose reads your public pages and drafts what she knows about your business. <em>Correct anything</em> before you continue.</p></div>
+          <div class="step reveal" style="--d:.08s"><h3>Shape and test her</h3><p>Choose her name, greeting, tone and colour, then <em>talk to her by chat or voice</em> before you pick a plan.</p></div>
+          <div class="step reveal" style="--d:.16s"><h3>We take her live</h3><p>We install Rose on your site, or send the snippet to your web person, then <em>test chat, voice and lead delivery</em>.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="pricing" aria-labelledby="pricingTitle">
+      <div class="wrap">
+        <div class="section-head center reveal">
+          <p class="eyebrow">Pricing</p>
+          <h2 class="display" id="pricingTitle">Simple plans.<br><em>Every lead counts.</em></h2>
+          <p class="lead">Both plans include Rose chat and voice. Try your agent first and choose a plan when you’re happy with her.</p>
+        </div>
+        <div class="plans">
+          <article class="plan reveal">
+            <h3>Basic</h3>
+            <div class="price"><b><sup>CA$</sup>39</b><span>/ month</span></div>
+            <p class="desc">For getting every visitor answered.</p>
+            <ul>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>Rose chat and voice on your website</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>75 voice minutes each month</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>Quote requests sent to you</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>Edit Rose anytime in Workground</li>
+            </ul>
+            <a class="btn btn-dark" href="https://wildroseautomations.ca/configure/">Start with Basic</a>
+          </article>
+          <article class="plan pro reveal" style="--d:.08s">
+            <span class="badge">Most voice</span>
+            <h3>Pro</h3>
+            <div class="price"><b><sup>CA$</sup>129</b><span>/ month</span></div>
+            <p class="desc">For busy sites where visitors love to talk.</p>
+            <ul>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>Rose chat and voice on your website</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>275 voice minutes each month</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>Quote requests sent to you</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg>Edit Rose anytime in Workground</li>
+            </ul>
+            <a class="btn btn-primary" href="https://wildroseautomations.ca/configure/">Start with Pro <span class="arrow" aria-hidden="true">→</span></a>
+          </article>
+        </div>
+        <p class="fine reveal">Extra voice minutes are CA$0.29 each. Custom integrations are quoted separately. Payments are handled securely by Square.</p>
+      </div>
+    </section>
+
+    <section class="block" id="faq" aria-labelledby="faqTitle">
+      <div class="wrap faq">
+        <div class="section-head reveal">
+          <p class="eyebrow">FAQ</p>
+          <h2 class="display" id="faqTitle">Questions,<br><em>answered by Rose.</em></h2>
+          <p class="lead">Something else on your mind? Email <a href="mailto:jack@wildroseautomations.ca" style="color:var(--peach)">jack@wildroseautomations.ca</a>.</p>
+        </div>
+        <div class="faq-list reveal">
+          <details><summary>Can I see Rose on my site before I pay?<span class="pm" aria-hidden="true"></span></summary><div class="rose-ans"><span class="orb-xs" aria-hidden="true"></span><p>Yes! Pop your website into the box at the top of this page and I’ll show up on it right here. Nothing gets installed. When you configure me, you can chat with me and talk to me out loud before you choose a plan.</p></div></details>
+          <details><summary>Do I need to install anything myself?<span class="pm" aria-hidden="true"></span></summary><div class="rose-ans"><span class="orb-xs" aria-hidden="true"></span><p>Nope. After checkout, the Wildrose team gets me live. Most owners invite them as a website contributor. They can also guide you on a call, send my snippet to your web person, or set up a hosted Rose page if your builder blocks custom code.</p></div></details>
+          <details><summary>What does Rose do when someone asks for a quote?<span class="pm" aria-hidden="true"></span></summary><div class="rose-ans"><span class="orb-xs" aria-hidden="true"></span><p>I ask the follow-up questions you would, collect their contact details and send the request straight to you, so you can reply while the lead is still warm.</p></div></details>
+          <details><summary>Can I change what Rose says?<span class="pm" aria-hidden="true"></span></summary><div class="rose-ans"><span class="orb-xs" aria-hidden="true"></span><p>Of course. Everything from your website scan carries into Workground, where you can update my business facts, greeting, tone and colours whenever you like.</p></div></details>
+          <details><summary>What if Rose can’t answer a question?<span class="pm" aria-hidden="true"></span></summary><div class="rose-ans"><span class="orb-xs" aria-hidden="true"></span><p>I hand off to you. I take the visitor’s contact details and pass their request along, so nobody leaves without a way to reach you.</p></div></details>
+          <details><summary>What happens if I go over my voice minutes?<span class="pm" aria-hidden="true"></span></summary><div class="rose-ans"><span class="orb-xs" aria-hidden="true"></span><p>Extra voice minutes are CA$0.29 each. Chat is included on both plans, so I can keep typing all day.</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final" id="get-rose" aria-labelledby="finalTitle">
+      <canvas id="finalWaves" aria-hidden="true"></canvas>
+      <p class="eyebrow reveal">Ready when you are</p>
+      <h2 class="display reveal" id="finalTitle" style="--d:.08s">Stop losing visitors.<br><em>Give them Rose.</em></h2>
+      <a class="big-cta reveal" style="--d:.16s" href="#top" id="finalTry">Get Rose on my site</a>
+      <span class="alt reveal" style="--d:.2s">Or <a href="https://wildroseautomations.ca/configure/">configure your agent</a> now.</span>
+      <div class="lockup reveal" style="--d:.24s"><img src="https://wildroseautomations.ca/logos/wildrose.png" width="52" height="52" alt=""><div><b>WILDROSE</b><span>AUTOMATIONS</span></div></div>
+    </section>
+  </main>
+
+  <aside class="rose-guide" id="roseGuide" aria-label="Rose, your guide to this page">
+    <div class="rg-bubble" id="rgBubble" role="status" aria-live="polite">
+      <div class="rg-head"><img src="https://wildroseautomations.ca/logos/wildrose.png" alt=""><strong>Rose</strong><small>here to help</small><button class="rg-close" type="button" id="rgClose" aria-label="Hide Rose’s tips">×</button></div>
+      <p id="rgText"></p>
+    </div>
+    <button class="rg-orb" type="button" id="rgOrb" aria-label="Talk to Rose"><span class="rg-label">Talk to me</span></button>
+  </aside>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <a class="brand" href="#top"><img src="https://wildroseautomations.ca/logos/wildrose.png" width="30" height="30" alt="">Wildrose Automations</a>
+          <p>Rose is the AI front desk that answers your website visitors and sends the leads to you.</p>
+        </div>
+        <div><h4>Product</h4><ul><li><a href="#night">Meet Rose</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+        <div><h4>Get started</h4><ul><li><a href="https://wildroseautomations.ca/configure/">Configure my agent</a></li><li><a href="https://workground.wildroseautomations.ca/login.html">Log in to Workground</a></li><li><a href="https://wildroseautomations.ca/rose-install-help.html">Install help</a></li><li><a href="mailto:jack@wildroseautomations.ca">Contact</a></li></ul></div>
+        <div><h4>Legal</h4><ul><li><a href="https://wildroseautomations.ca/privacy.html">Privacy</a></li><li><a href="https://wildroseautomations.ca/terms.html">Terms</a></li><li><a href="https://wildroseautomations.ca/data-deletion.html">Data deletion</a></li></ul></div>
+      </div>
+      <div class="foot-bottom"><span>© 2026 Wildrose Automations</span><a href="mailto:jack@wildroseautomations.ca" style="color:inherit;text-decoration:none">jack@wildroseautomations.ca</a></div>
+    </div>
+  </footer>
+
+  <script src="brain-3d.js?v=calm-1"></script>
+  <script>
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Nav background and scroll reveals.
+    (()=>{
+      const nav=document.getElementById('nav');
+      const links=[...nav.querySelectorAll('.nav-links a')],groups=[['#night',['night','capture','glow','look']],['#how-it-works',['how-it-works']],['#pricing',['pricing']],['#faq',['faq']]];
+      const onScroll=()=>{
+        nav.classList.toggle('scrolled',scrollY>12);
+        const y=innerHeight*.4;let on=null;
+        for(const [href,ids] of groups)for(const id of ids){const r=document.getElementById(id)?.getBoundingClientRect();if(r&&r.top<=y&&r.bottom>y)on=href}
+        links.forEach(a=>{a.classList.toggle('on',a.getAttribute('href')===on);on===a.getAttribute('href')?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')});
+      };
+      addEventListener('scroll',onScroll,{passive:true});onScroll();
+      const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+      document.getElementById('finalTry').addEventListener('click',e=>{e.preventDefault();scrollTo({top:0,behavior:'smooth'});setTimeout(()=>document.getElementById('tryRoseWebsite').focus({preventScroll:true}),500)});
+    })();
+
+    // Glowing voice waves, after the brand ad.
+    (()=>{
+      function waves(canvas,{lines=26,amp=.16,center=.5,speed=1,fadeLeft=false,narrowCenter=0}){
+        const ctx=canvas.getContext('2d');let w=0,h=0,dpr=1,visible=true,t=0,last=performance.now();
+        const size=()=>{dpr=Math.min(devicePixelRatio||1,2);w=canvas.clientWidth;h=canvas.clientHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)};
+        const draw=now=>{
+          t+=(now-last)/1000*speed;last=now;ctx.clearRect(0,0,w,h);const A=Math.min(h,760),mid=h*(w<1080&&narrowCenter?narrowCenter:center);ctx.globalCompositeOperation='lighter';
+          for(let i=0;i<lines;i++){
+            const k=i/(lines-1),phase=k*2.2,alpha=.05+.5*Math.pow(1-Math.abs(k-.5)*2,2);
+            ctx.beginPath();
+            for(let x=0;x<=w;x+=6){
+              const nx=x/w,env=Math.pow(Math.sin(Math.PI*nx),1.4);
+              const y=mid+Math.sin(nx*9+t*1.1+phase)*A*amp*env*(.55+.45*Math.sin(t*.5+k*3))+Math.sin(nx*3.3-t*.6+phase*1.7)*A*amp*.45*env;
+              x?ctx.lineTo(x,y):ctx.moveTo(x,y);
+            }
+            const rgb=`255,${110+Math.round(70*k)},${50+Math.round(40*k)}`;
+            if(fadeLeft&&w>1080){const g=ctx.createLinearGradient(0,0,w,0);g.addColorStop(0,`rgba(${rgb},0)`);g.addColorStop(.42,`rgba(${rgb},0)`);g.addColorStop(.62,`rgba(${rgb},${alpha})`);g.addColorStop(1,`rgba(${rgb},${alpha})`);ctx.strokeStyle=g}
+            else ctx.strokeStyle=`rgba(${rgb},${alpha})`;
+            ctx.lineWidth=1;ctx.shadowColor='rgba(255,87,34,.9)';ctx.shadowBlur=8;ctx.stroke();
+          }
+          if(visible&&!reduced)requestAnimationFrame(draw);
+        };
+        size();new ResizeObserver(()=>{size();if(reduced)draw(performance.now())}).observe(canvas);
+        new IntersectionObserver(([e])=>{const was=visible;visible=e.isIntersecting;if(visible&&!was&&!reduced){last=performance.now();requestAnimationFrame(draw)}}).observe(canvas);
+        requestAnimationFrame(draw);
+      }
+      waves(document.getElementById('heroWaves'),{lines:34,amp:.22,center:.5,speed:.9});
+      waves(document.getElementById('finalWaves'),{lines:24,amp:.16,center:.5,speed:.7});
+    })();
+
+    // Night shift: once on screen, the clock runs from closing time to morning by itself.
+    (()=>{
+      const section=document.getElementById('night'),timeEl=document.getElementById('nsTime'),ampm=document.getElementById('nsAmPm');
+      const scenes=[...section.querySelectorAll('.scene')],ticks=[...section.querySelectorAll('.ticks button')];
+      const sky=section.querySelector('.sky'),[dusk,night,dawn]=sky.querySelectorAll('i'),stars=sky.querySelector('.stars');
+      const events=[.04,.3,.56,.8],times=[[0,17*60],[.04,18*60+40],[.3,23*60+47],[.56,26*60+13],[.8,31*60+2],[1,31*60+20]],LOOP=14000;
+      const fmt=m=>{m=Math.round(m)%1440;const h=Math.floor(m/60),mm=String(m%60).padStart(2,'0');return [`${h%12||12}:${mm}`,h<12?'AM':'PM']};
+      const setScene=i=>{scenes.forEach((s,n)=>s.classList.toggle('on',n===i));ticks.forEach((b,n)=>b.classList.toggle('on',n===i))};
+      const paint=(minutes,i)=>{const [a,b]=fmt(minutes);timeEl.textContent=a;ampm.textContent=b;setScene(i);const p=(minutes-17*60)/(14*60);dusk.style.opacity=String(Math.max(0,1-p*3));night.style.opacity=String(p>.1&&p<.85?1:0);stars.style.opacity=String(p>.15&&p<.8?.9:0);dawn.style.opacity=String(p>.78?1:0)};
+      const at=p=>{let m=times[0][1];for(let k=1;k<times.length;k++){const [p0,m0]=times[k-1],[p1,m1]=times[k];if(p<=p1){m=m0+(m1-m0)*((p-p0)/(p1-p0));break}m=m1}let i=0;events.forEach((e,n)=>{if(p>=e)i=n});paint(m,i)};
+      if(reduced){at(.8);ticks.forEach(b=>b.addEventListener('click',()=>at(events[+b.dataset.step])));return}
+      let p=0,last=0,visible=false;
+      const frame=now=>{if(!visible)return;p=(p+(now-last)/LOOP)%1;last=now;at(p);requestAnimationFrame(frame)};
+      new IntersectionObserver(([e])=>{visible=e.isIntersecting;if(visible){last=performance.now();requestAnimationFrame(frame)}},{threshold:.35}).observe(section);
+      ticks.forEach(b=>b.addEventListener('click',()=>{p=events[+b.dataset.step];at(p)}));
+      at(0);
+    })();
+
+    // Every example uses a static copy of the real, live Rose widget once it has loaded.
+    const roseReady=new Promise(resolve=>{
+      const started=performance.now();
+      const check=()=>{const live=document.querySelector('#liveRoseVoice .wr-ai .wr-panel');if(live)return setTimeout(()=>resolve(true),400);if(performance.now()-started>15000)return resolve(false);setTimeout(check,150)};
+      check();
+    });
+    const LOGO='https://wildroseautomations.ca/logos/wildrose.png';
+    function roseCopy(view){
+      const copy=document.querySelector('#liveRoseVoice .wr-ai').cloneNode(true);
+      copy.classList.add('rose-copy');copy.setAttribute('aria-hidden','true');copy.inert=true;
+      copy.querySelectorAll('.wr-tab').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+      copy.querySelectorAll('.wr-view').forEach(v=>v.classList.toggle('active',v.dataset.view===view));
+      const log=copy.querySelector('.wr-chat-log');if(log)roseReset(log);
+      const compose=copy.querySelector('.wr-compose');if(compose)compose.style.display=view==='chat'?'flex':'none';
+      return copy;
+    }
+    let ROSE_GREETING='';
+    function roseReset(log){
+      if(!ROSE_GREETING)ROSE_GREETING=document.querySelector('#liveRoseVoice .wr-chat-log .wr-msg.bot')?.textContent.trim()||'Hi, I’m Rose. How can I help?';
+      log.replaceChildren();roseMsg(log,'r',ROSE_GREETING);
+    }
+    function roseMsg(log,who,content,html){
+      let bubble;
+      if(who==='r'){const row=document.createElement('div');row.className='wr-row';const av=document.createElement('div');av.className='wr-avatar';const img=document.createElement('img');img.src=LOGO;img.alt='';av.append(img);bubble=document.createElement('div');bubble.className='wr-msg bot';row.append(av,bubble);log.append(row)}
+      else{bubble=document.createElement('div');bubble.className='wr-msg user';log.append(bubble)}
+      html?bubble.innerHTML=content:bubble.textContent=content;
+      log.parentElement.scrollTop=log.parentElement.scrollHeight;
+      return who==='r'?bubble.parentElement:bubble;
+    }
+
+    // Type into the real Rose's message box key by key, then send.
+    async function roseType(copy,text,alive=()=>true){
+      const input=copy.querySelector('.wr-input'),compose=copy.querySelector('.wr-compose'),send=copy.querySelector('.wr-send');
+      if(!input)return;
+      compose.classList.add('is-typing');input.value='';
+      for(const ch of text){if(!alive())break;input.value+=ch;input.scrollLeft=input.scrollWidth;await new Promise(r=>setTimeout(r,ch===' '?70:38+Math.random()*48))}
+      await new Promise(r=>setTimeout(r,260));
+      send?.classList.add('pressed');await new Promise(r=>setTimeout(r,180));send?.classList.remove('pressed');
+      input.value='';compose.classList.remove('is-typing');
+    }
+
+    // Night shift scenes: the real Rose in the corner of the website.
+    roseReady.then(ok=>{
+      if(!ok)return;
+      const chats={0:[['v','Do you work on weekends?'],['r','We do! Saturdays 9 to 4. Want me to send a request to the team?']],1:[['v','My tap’s been dripping all week. Can I get a quote?'],['r','Of course. What’s the best email to reach you?']]};
+      document.querySelectorAll('#night .scene').forEach(scene=>{
+        const n=+scene.dataset.scene;if(n>2)return;
+        const mini=scene.querySelector('.mini');if(!mini)return;
+        const copy=roseCopy(n===2?'voice':'chat'),wrap=document.createElement('div');wrap.className='rose-wrap';wrap.append(copy);
+        if(n===2){
+          copy.querySelector('.wr-orb')?.classList.add('speaking');
+          const st=copy.querySelector('.wr-status'),note=copy.querySelector('.wr-note');if(st)st.textContent='On a call with a visitor';if(note)note.textContent='“Hi, I need someone for a furnace check…”';
+          const start=copy.querySelector('.wr-start-voice'),end=copy.querySelector('.wr-end-voice');if(start)start.style.display='none';if(end)end.style.display='';
+        }else{const log=copy.querySelector('.wr-chat-log');chats[n].forEach(([w,s])=>roseMsg(log,w,s))}
+        const captured=mini.querySelector('.captured');
+        mini.replaceWith(wrap);if(captured)wrap.after(captured);
+        scene.classList.add('has-rose');
+      });
+    });
+
+    // Rose's brain: the anatomical brain from the original site, lit up by the demo's own events.
+    const brain=(()=>{
+      const canvas=document.getElementById('workflowGraph'),card=document.getElementById('brainCard'),toolsEl=document.getElementById('brainTools');
+      const TOOLS=[['Knowledge','icons/knowledge.svg'],['Price guide','icons/googlesheets.svg'],['HubSpot','icons/hubspot.svg'],['Gmail','icons/gmail.svg']];
+      const icons=Object.fromEntries([['Rose','https://wildroseautomations.ca/logos/wildrose.png'],...TOOLS]);
+      toolsEl.replaceChildren(...TOOLS.map(([name,src])=>{const d=document.createElement('div');d.className='bt';d.dataset.tool=name;const i=document.createElement('img');i.src=src;i.alt='';const s=document.createElement('span');s.textContent=name;d.append(i,s);return d}));
+      const setCard=(tool,state,title,working)=>{card.classList.toggle('working',!!working);card.querySelector('img').src=icons[tool]||icons.Rose;card.querySelector('.bc-tool').textContent=tool;card.querySelector('.bc-state').textContent=state;card.querySelector('.bc-title').textContent=title;
+        toolsEl.querySelectorAll('.bt').forEach(b=>{if(b.dataset.tool===tool){b.classList.toggle('hot',!!working);if(!working)b.classList.add('done')}})};
+      let model=null,ctx=canvas.getContext('2d'),W=0,H=0,clock=0,last=performance.now(),visible=false,adj=[],toolNode={},bulbs=new Map();
+      let active=0,routePath=[0],work={path:[],at:-1e9},speech={path:[],at:-1e9,seed:11},done=new Set(),base=document.createElement('canvas'),baseCtx=base.getContext('2d'),baseRev=-1;
+      const size=()=>{const r=canvas.getBoundingClientRect(),k=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;canvas.width=Math.round(W*k);canvas.height=Math.round(H*k);ctx.setTransform(k,0,0,k,0,0);baseRev=-1};
+      const route=(a,b)=>{const n=model.nodes.length,dist=Array(n).fill(Infinity),prev=Array(n).fill(-1),seen=new Set();dist[a]=0;
+        for(let s=0;s<n;s++){let c=-1;for(let i=0;i<n;i++)if(!seen.has(i)&&(c<0||dist[i]<dist[c]))c=i;if(c<0||!isFinite(dist[c])||c===b)break;seen.add(c);for(const e of adj[c]){const d=dist[c]+e.d;if(d<dist[e.i]){dist[e.i]=d;prev[e.i]=c}}}
+        if(a===b||prev[b]<0)return [a];const path=[b];while(path[0]!==a)path.unshift(prev[path[0]]);return path};
+      function bolt(p,q,seed,alpha,scale){
+        if(!p||!q||alpha<=0)return;const dx=q.x-p.x,dy=q.y-p.y,len=Math.hypot(dx,dy);if(len<2)return;
+        const tick=Math.floor(clock/55),jit=Math.min(8*scale,len*.17),pts=[p];
+        for(let k=1;k<6;k++){const t=k/6,nz=Math.sin((seed*31+k*97+tick*37)*12.9898)*43758.5453,off=((nz-Math.floor(nz))*2-1)*jit*Math.sin(Math.PI*t);pts.push({x:p.x+dx*t-dy/len*off,y:p.y+dy*t+dx/len*off})}
+        pts.push(q);ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);for(let k=1;k<pts.length;k++)ctx.lineTo(pts[k].x,pts[k].y);
+        ctx.lineJoin='round';ctx.lineCap='round';ctx.strokeStyle=`rgba(255,104,30,${alpha*.65})`;ctx.lineWidth=7*scale;ctx.shadowBlur=18*scale;ctx.shadowColor='#ff6a27';ctx.stroke();
+        ctx.shadowBlur=0;ctx.strokeStyle=`rgba(255,182,84,${alpha})`;ctx.lineWidth=2.7*scale;ctx.stroke();ctx.strokeStyle=`rgba(255,249,223,${Math.min(1,alpha*1.25)})`;ctx.lineWidth=1.05*scale;ctx.stroke();
+      }
+      const strength=(age,span)=>age>=0&&age<span?Math.min(1,age/120)*(1-age/span):0;
+      function discharge(P,path,power,age,seed,scale){
+        if(power<=0||path.length<2)return null;const travel=Math.min(1,age/620),pos=travel*path.length-1,tip=Math.min(path.length-2,Math.max(0,Math.floor(pos)));let head=null;
+        for(let n=0;n<path.length-1&&n<=tip;n++){const p=P[path[n]],q=P[path[n+1]],f=n===tip?Math.min(1,Math.max(.08,pos-n+1)):1,h={x:p.x+(q.x-p.x)*f,y:p.y+(q.y-p.y)*f};bolt(p,h,seed+n,power*(n===tip?1:.52),scale);if(n===tip)head=h}
+        for(let k=0;k<3;k++){const at=path[Math.max(0,tip-k)],br=adj[at];if(!br.length)continue;const b=br[(Math.floor(age/110)+seed+k*7)%br.length];if(b.i!==path[Math.max(0,tip-k)+1])bolt(P[at],P[b.i],seed+97+k,power*(.58-k*.11),scale)}
+        return head;
+      }
+      function draw(now){
+        const dt=Math.min(Math.max(now-last,0),100);last=now;clock+=dt;
+        if(!W)size();const scale=Math.min(W/430,1.12),P=RoseBrain3D.project(model,W,H,clock);
+        ctx.clearRect(0,0,W,H);RoseBrain3D.paint(ctx,model,P,W,H);
+        if(baseRev!==model.revision){base.width=canvas.width;base.height=canvas.height;baseCtx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0);
+          for(const [a,b] of model.edges){const p=P[a],q=P[b],front=(p.z+q.z)/2>0;baseCtx.beginPath();baseCtx.moveTo(p.x,p.y);baseCtx.lineTo(q.x,q.y);baseCtx.strokeStyle=front?'#ffc59b25':'#efa16814';baseCtx.lineWidth=front?.65:.45;baseCtx.stroke()}
+          for(let i=0;i<model.nodes.length;i++){const p=P[i],name=bulbs.get(i),r=(name?2.7:i%11===0?1.2:.65)*scale*p.perspective;baseCtx.beginPath();baseCtx.arc(p.x,p.y,r,0,Math.PI*2);baseCtx.fillStyle=p.z>0?'#ef9d6345':'#ef9d6320';baseCtx.fill()}
+          baseRev=model.revision}
+        ctx.drawImage(base,0,0,W,H);
+        const wAge=clock-work.at,sAge=clock-speech.at,wp=strength(wAge,1450),sp=strength(sAge,1700);
+        const head=wp>sp?discharge(P,work.path,wp,wAge,71,scale):discharge(P,speech.path,sp,sAge,speech.seed,scale);
+        const onRoute=new Set(routePath);
+        for(let i=0;i<model.nodes.length;i++){const p=P[i],name=bulbs.get(i),hot=i===active&&active!==0,isDone=done.has(name);if(!hot&&!isDone&&!onRoute.has(i))continue;
+          const r=(hot?6:name?3.4:.9)*scale*p.perspective;ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fillStyle=hot?'#fff0d0':isDone?'#ffd2a0':'#ffc99055';ctx.shadowBlur=hot?20:isDone?8:0;ctx.shadowColor='#ff9444';ctx.fill();ctx.shadowBlur=0}
+        if(head){ctx.beginPath();ctx.arc(head.x,head.y,3.5*scale,0,Math.PI*2);ctx.fillStyle='#fff7de';ctx.shadowBlur=20;ctx.shadowColor='#ff984c';ctx.fill();ctx.shadowBlur=0}
+        if(visible&&!reduced)requestAnimationFrame(draw);
+      }
+      const ready=(async()=>{
+        if(!window.RoseBrain3D)return false;
+        try{await RoseBrain3D.ready}catch{return false}
+        model=RoseBrain3D.createModel();
+        model.nodes.forEach(()=>adj.push([]));
+        for(const [a,b] of model.edges){const p=model.nodes[a],q=model.nodes[b],d=Math.hypot(p.x-q.x,p.y-q.y,p.z-q.z);adj[a].push({i:b,d});adj[b].push({i:a,d})}
+        TOOLS.forEach(([name],i)=>{toolNode[name]=1+(i*97+31)%(model.nodes.length-1);bulbs.set(toolNode[name],name)});
+        size();new ResizeObserver(size).observe(canvas);canvas.addEventListener('rose:brain-change',()=>{if(reduced)draw(performance.now())});
+        new IntersectionObserver(([e])=>{const was=visible;visible=e.isIntersecting;if(visible&&!was){last=performance.now();requestAnimationFrame(draw)}}).observe(canvas);
+        if(reduced)draw(performance.now());
+        return true;
+      })();
+      return {
+        speak(who){if(!model)return;const target=active||toolNode.Knowledge;let path=route(0,target);if(path.length<2)path=[0,adj[0][0].i];speech={path,at:clock,seed:who==='r'?37:11}},
+        work(tool,state,title){setCard(tool,state,title,true);if(!model)return;const to=toolNode[tool]??0;routePath=route(routePath.at(-1)??0,to);active=to;work={path:routePath,at:clock}},
+        finish(tool,state,title){setCard(tool,state,title,false);done.add(tool);if(model)work={path:routePath.slice(-3),at:clock}},
+        idle(title){setCard('Rose','Listening',title||'Understanding the request',false)},
+        reset(){done.clear();active=0;routePath=[0];toolsEl.querySelectorAll('.bt').forEach(b=>b.classList.remove('hot','done'));this.idle()}
+      };
+    })();
+
+    // Glow showcase: Rose guides someone through a business dashboard, one lit-up step at a time.
+    (()=>{
+      const demo=document.getElementById('glowDemo'),dash=demo.querySelector('.dash'),ring=document.getElementById('siteGlow'),cursor=document.getElementById('dashCursor'),slot=document.getElementById('siteRose');
+      const flows=[
+        {q:'How do I download last month’s invoice?',steps:[
+          {say:'Open Billing in the menu. I’ve lit it up for you.',glow:'nav-billing',click:()=>view('billing')},
+          {say:'Now choose Invoice history.',glow:'tab-invoices',click:()=>pane('billing','invoices')},
+          {say:'There it is. Hit Download next to October.',glow:'dl-oct'}]},
+        {q:'Where do I add a team member?',steps:[
+          {say:'Head to Settings. It’s glowing in the menu.',glow:'nav-settings',click:()=>view('settings')},
+          {say:'Pick the Team tab.',glow:'tab-team',click:()=>pane('settings','team')},
+          {say:'Tap Invite member and enter their email. That’s it!',glow:'invite'}]}
+      ];
+      const wait=ms=>new Promise(r=>setTimeout(r,ms));
+      function view(name){dash.querySelectorAll('.dash-nav').forEach(n=>n.classList.toggle('on',n.dataset.view===name));dash.querySelectorAll('.dash-view').forEach(v=>v.classList.toggle('on',v.dataset.view===name));dash.querySelectorAll(`.dash-view[data-view="${name}"] .dash-tabs span`).forEach((s,i)=>s.classList.toggle('on',i===0));dash.querySelectorAll(`.dash-view[data-view="${name}"] .dash-pane`).forEach((p,i)=>p.classList.toggle('on',i===0))}
+      function pane(v,name){const root=dash.querySelector(`.dash-view[data-view="${v}"]`);root.querySelectorAll('.dash-tabs span').forEach(s=>s.classList.toggle('on',s.dataset.tab===name));root.querySelectorAll('.dash-pane').forEach(p=>p.classList.toggle('on',p.dataset.pane===name))}
+      const rect=key=>{const el=dash.querySelector(`[data-glow="${key}"]`),d=dash.getBoundingClientRect(),r=el.getBoundingClientRect();return {el,x:r.left-d.left,y:r.top-d.top,w:r.width,h:r.height}};
+      const place=key=>{ring.dataset.k=key;const {el,x,y,w,h}=rect(key),pad=6;ring.style.left=`${x-pad}px`;ring.style.top=`${y-pad}px`;ring.style.width=`${w+pad*2}px`;ring.style.height=`${h+pad*2}px`;ring.style.borderRadius=`${(parseFloat(getComputedStyle(el).borderTopLeftRadius)||8)+pad}px`;ring.classList.add('on')};
+      const point=async key=>{const {x,y,w,h}=rect(key);cursor.classList.add('on');cursor.style.left=`${x+w*.6}px`;cursor.style.top=`${y+h*.55}px`;await wait(950);cursor.classList.remove('click');void cursor.offsetWidth;cursor.classList.add('click');await wait(260)};
+      let copy=null,log=null,inView=false,running=false;
+      roseReady.then(ok=>{if(!ok)return;copy=roseCopy('chat');const wrap=document.createElement('div');wrap.className='rose-wrap';wrap.append(copy);slot.append(wrap);log=copy.querySelector('.wr-chat-log');if(inView)play()});
+      async function play(){
+        if(running)return;running=true;
+        while(inView){
+          for(const f of flows){
+            if(!inView)break;
+            view('overview');ring.classList.remove('on');cursor.classList.remove('on');if(log)roseReset(log);await wait(700);
+            if(copy){await roseType(copy,f.q,()=>inView);roseMsg(log,'v',f.q)}
+            for(const s of f.steps){
+              if(!inView)break;
+              if(copy){const typing=roseMsg(log,'r','<span class="wr-typing"><i></i><i></i><i></i></span>',true);await wait(750);typing.remove();roseMsg(log,'r',s.say)}
+              await wait(200);place(s.glow);await wait(1100);
+              if(s.click){await point(s.glow);s.click();ring.classList.remove('on');await wait(450)}else await wait(1800);
+            }
+            cursor.classList.remove('on');await wait(1400);
+          }
+        }
+        running=false;
+      }
+      if(reduced){place('nav-billing');return}
+      new IntersectionObserver(([e])=>{inView=e.isIntersecting;if(inView)play()},{threshold:.35}).observe(demo);
+      addEventListener('resize',()=>{if(ring.classList.contains('on')&&ring.dataset.k)place(ring.dataset.k)});
+    })();
+
+    // Lead capture demo: typing zooms in, the brain works behind the scenes, the quote fills in.
+    (()=>{
+      const convo=document.getElementById('convo'),status=document.getElementById('leadStatus'),demo=document.getElementById('captureDemo'),cam=document.getElementById('captureCam');
+      const field=k=>demo.querySelector(`.field[data-key="${k}"]`);
+      const setField=(k,v)=>{const f=field(k);f.querySelector('b').textContent=v;f.classList.remove('fill');void f.offsetWidth;f.classList.add('fill')};
+      const script=[
+        {who:'v',html:'Hi! Do you install <mark>heat pumps</mark>?',fill:['service','Heat pump install'],work:['Knowledge','Searching','Checking the services you offer','Found','Heat pump installs are offered']},
+        {who:'r',text:'We do! Is it for a house or a business?'},
+        {who:'v',html:'A <mark>house, about 1,800 sq ft</mark>.',fill:['property','House · 1,800 sq ft'],work:['Price guide','Looking up','Checking prices for a 1,800 sq ft home','Found','Estimate range added to the quote']},
+        {who:'r',text:'Great, that’s one of our standard installs. What’s the best email for your quote?'},
+        {who:'v',html:'<mark>jordan@example.com</mark>',fill:['email','jordan@example.com']},
+        {who:'r',text:'And who should the team ask for?'},
+        {who:'v',html:'<mark>Jordan Lee</mark>',fill:['name','Jordan Lee'],work:['HubSpot','Creating','Creating the quote in your CRM','Created','New deal: Heat pump install · Jordan Lee'],after:['crm','HubSpot deal created']},
+        {who:'r',text:'Thanks Jordan! I’ve sent this to the team. They’ll be in touch with your quote.',done:true,work:['Gmail','Sending','Emailing the quote summary to you','Sent','Quote summary is in your inbox']}
+      ];
+      const wait=ms=>new Promise(r=>setTimeout(r,ms));
+      let running=false,inView=false,log=null,pending=null;
+      roseReady.then(ok=>{if(ok)pending=roseCopy('chat')});
+      const swap=()=>{if(!pending)return;const panel=demo.querySelector('.glass-panel');pending.setAttribute('aria-label','Example Rose chat');panel.replaceWith(pending);log=pending.querySelector('.wr-chat-log');pending=null};
+      const bubble=(who,content,html)=>{
+        if(log)return roseMsg(log,who,content,html);
+        const b=document.createElement('div');b.className=`bub ${who}`;html?b.innerHTML=content:b.textContent=content;convo.append(b);return b};
+      const typingBubble=()=>log?roseMsg(log,'r','<span class="wr-typing"><i></i><i></i><i></i></span>',true):(()=>{const t=bubble('r','<i></i><i></i><i></i>',true);t.classList.add('typing');return t})();
+      const zoom=on=>{
+        if(reduced)return;
+        if(on){const compose=demo.querySelector('.rose-copy .wr-compose');if(!compose)return;const d=demo.getBoundingClientRect(),c=compose.getBoundingClientRect(),cm=cam.getBoundingClientRect();if(c.top<60||c.bottom>innerHeight-20)return;
+          demo.style.transformOrigin=`${c.left-d.left+c.width/2}px ${c.top-d.top+c.height/2}px`;
+          cam.style.setProperty('--vx',`${(c.left-cm.left+c.width/2)/cm.width*100}%`);cam.style.setProperty('--vy',`${(c.top-cm.top+c.height/2)/cm.height*100}%`);
+          demo.style.setProperty('--zoom',innerWidth<700?'1.45':'1.75');demo.classList.add('zoom');cam.classList.add('zooming')}
+        else{demo.classList.remove('zoom');cam.classList.remove('zooming')}
+      };
+      const reset=()=>{swap();log?roseReset(log):convo.replaceChildren();demo.querySelectorAll('.field').forEach(f=>{f.classList.remove('fill');f.querySelector('b').textContent=''});status.textContent='Listening';status.classList.remove('sent');brain.reset()};
+      const fillAll=()=>{log?roseReset(log):convo.replaceChildren();script.forEach(s=>s.who==='v'?bubble('v',s.html,true):bubble('r',s.text));script.forEach(s=>{if(s.fill)field(s.fill[0]).querySelector('b').textContent=s.fill[1];if(s.after)field(s.after[0]).querySelector('b').textContent=s.after[1]});status.textContent='Sent to owner';status.classList.add('sent');brain.finish('Gmail','Sent','Quote summary is in your inbox')};
+      async function runWork(w){brain.work(w[0],w[1],w[2]);await wait(1500);brain.finish(w[0],w[3],w[4])}
+      async function play(){
+        if(running)return;running=true;
+        while(inView){
+          reset();await wait(900);
+          for(const s of script){
+            if(!inView)break;
+            if(s.who==='r'){const t=typingBubble();await wait(850);t.remove();bubble('r',s.text);brain.speak('r')}
+            else{
+              await wait(300);
+              if(log){zoom(true);await wait(700);await roseType(log.closest('.wr-ai'),s.html.replace(/<[^>]+>/g,''),()=>inView);zoom(false)}
+              bubble('v',s.html,true);brain.speak('v');
+            }
+            if(s.fill){await wait(300);setField(s.fill[0],s.fill[1]);status.textContent='Capturing'}
+            if(s.work){await wait(s.who==='v'?500:300);await runWork(s.work)}
+            if(s.after){setField(s.after[0],s.after[1])}
+            if(s.done){status.textContent='Sent to owner';status.classList.add('sent')}
+            await wait(s.who==='r'?900:500);
+          }
+          brain.idle('All done. Waiting for the next visitor');await wait(4000);
+        }
+        running=false;
+      }
+      if(reduced){roseReady.then(()=>{swap();fillAll()});fillAll();return}
+      new IntersectionObserver(([e])=>{inView=e.isIntersecting;if(inView)play();else zoom(false)},{threshold:.3}).observe(cam);
+    })();
+
+    // Rose follows the visitor down the page, says something about each section and points at it.
+    (()=>{
+      const guide=document.getElementById('roseGuide'),bubble=document.getElementById('rgBubble'),text=document.getElementById('rgText'),orb=document.getElementById('rgOrb');
+      const lines=[
+        {id:'night',say:'This is me on the night shift. Watch the clock: I never clock out.',glow:'.device'},
+        {id:'capture',say:'Watch my brain work: prices, your CRM, then the quote lands in your inbox.',glow:'.ticket'},
+        {id:'glow',say:'One of my favourite tricks: I can guide your customers through your dashboard and light up each step.'},
+        {id:'look',say:'Go on, pick my colour. I’ll wear whatever suits your brand.',glow:'.swatch-row',pad:12},
+        {id:'how-it-works',say:'You won’t have to install me yourself. The Wildrose team takes care of it.',glow:'.step:nth-child(3)'},
+        {id:'pricing',say:'Both plans get all of me, chat and voice. Pro just comes with more voice minutes.',glow:'.plan.pro'},
+        {id:'faq',say:'I answered these myself. Can’t find yours? Tap me and ask out loud.',glow:'.faq-list details:first-child',pad:4},
+        {id:'get-rose',say:'Ready when you are. I’d love to meet your visitors.',glow:'.big-cta',pad:8}
+      ].map(l=>({...l,el:document.getElementById(l.id)})).filter(l=>l.el);
+      let dismissed=false;try{dismissed=sessionStorage.getItem('roseGuideHidden')==='1'}catch{}
+      let current=null,typing=0,glowEl=null;
+      const narrow=matchMedia('(max-width:600px)');
+      const clearGlow=()=>{if(glowEl){const g=glowEl.el;g.classList.remove('on');setTimeout(()=>g.remove(),500);glowEl=null}};
+      const track=()=>{if(!glowEl)return;const {el,target,pad}=glowEl,r=target.getBoundingClientRect();el.style.left=`${r.left-pad}px`;el.style.top=`${r.top-pad}px`;el.style.width=`${r.width+pad*2}px`;el.style.height=`${r.height+pad*2}px`;requestAnimationFrame(track)};
+      const glow=(line)=>{
+        clearGlow();if(!line.glow)return;const target=line.el.querySelector(line.glow);if(!target)return;
+        const g=document.createElement('span');g.className='rose-glow';g.setAttribute('aria-hidden','true');
+        const r=parseFloat(getComputedStyle(target).borderTopLeftRadius)||14,pad=line.pad??8;
+        g.style.setProperty('--gr',`${r+pad}px`);document.body.append(g);glowEl={el:g,target,pad};track();requestAnimationFrame(()=>g.classList.add('on'));
+      };
+      const say=(line)=>{
+        const run=++typing;bubble.classList.add('open');bubble.classList.remove('done');orb.classList.add('talking');
+        if(reduced){text.textContent=line.say;bubble.classList.add('done');orb.classList.remove('talking');glow(line);return}
+        text.textContent='';let i=0;
+        const step=()=>{if(run!==typing)return;text.textContent=line.say.slice(0,++i);if(i<line.say.length)setTimeout(step,22);else{bubble.classList.add('done');orb.classList.remove('talking');glow(line);if(narrow.matches)setTimeout(()=>{if(run===typing)bubble.classList.remove('open')},6500)}};
+        step();
+      };
+      const update=()=>{
+        const hero=document.querySelector('.hero').getBoundingClientRect();
+        const past=hero.bottom<innerHeight*.35;
+        guide.classList.toggle('show',past);
+        if(!past){if(current){current=null;clearGlow();bubble.classList.remove('open')}return}
+        const mid=innerHeight*.55;let active=null;
+        for(const l of lines){const r=l.el.getBoundingClientRect();if(r.top<=mid&&r.bottom>mid)active=l}
+        if(active&&active!==current){current=active;if(!dismissed)say(active);else glow(active)}
+      };
+      addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+      document.getElementById('rgClose').addEventListener('click',()=>{dismissed=true;typing++;bubble.classList.remove('open');try{sessionStorage.setItem('roseGuideHidden','1')}catch{}});
+      orb.addEventListener('click',()=>{document.getElementById('liveRoseVoice').scrollIntoView({behavior:reduced?'auto':'smooth',block:'center'})});
+    })();
+
+    // Your look: tint the orb and button.
+    (()=>{
+      let orb=document.getElementById('bigOrb'),btn=document.getElementById('lookBtn'),real=null,chosen=null;const stage=document.getElementById('lookStage');
+      const apply=s=>{
+        if(!s)return;
+        if(real){real.style.setProperty('--accent',s.dataset.btn);real.classList.toggle('tinted',!!s.dataset.tint);orb.style.setProperty('--tint',s.dataset.tint||'transparent');orb.style.setProperty('--tint-o',s.dataset.tint?'.85':'0')}
+        else{orb.style.setProperty('--tint',s.dataset.tint||'transparent');orb.style.setProperty('--tint-o',s.dataset.tint?'.85':'0');btn.style.setProperty('--btn',s.dataset.btn)}
+        stage.style.setProperty('--tint-glow',s.dataset.glow);
+      };
+      roseReady.then(ok=>{
+        if(!ok)return;
+        real=roseCopy('voice');const tint=document.createElement('span');tint.className='orb-tint';
+        const realOrb=real.querySelector('.wr-orb');if(!realOrb){real=null;return}
+        realOrb.append(tint);orb=tint;stage.querySelector('.look-card').replaceWith(real);apply(chosen);
+      });
+      document.querySelectorAll('.swatch').forEach(s=>s.addEventListener('click',()=>{
+        document.querySelectorAll('.swatch').forEach(o=>o.setAttribute('aria-pressed',String(o===s)));
+        chosen=s;apply(s);
+      }));
+    })();
+  </script>
+  <script src="https://wildroseautomations.ca/wildrose-widget-sandbox.js?v=voice-universal-3" data-api-base="https://wildrose-widget.wildeautomations.com" data-title="Rose" data-accent="#ff5722" data-logo="https://wildroseautomations.ca/logos/wildrose.png" data-fallback-url="mailto:jack@wildroseautomations.ca" data-greeting="Hi, I’m Rose. Ask questions about our services or tell me what you need a quote for, and I’ll help you reach the owner." data-placeholder="Ask a question or describe your request…" data-business-context="You are the visitor-facing assistant for Wildrose Automations. Help visitors with FAQs, capture quote requests and contact details, and offer owner handoff. Do not act as an owner configuration tool. Rose Basic is CA$39/month with 75 voice minutes; Pro is CA$129/month with 275 voice minutes. Extra voice minutes are $0.29/minute. Custom integrations are separately scoped. Do not promise completed bookings, payments or integrations." data-mount="#liveRoseVoice" data-inline="true" data-default-view="voice"></script>
+  <script>
+    (()=>{
+      const form=document.getElementById('try-rose');
+      const input=document.getElementById('tryRoseWebsite');
+      const shell=document.getElementById('roseSitePreview');
+      const frame=document.getElementById('rosePreviewFrame');
+      const title=document.getElementById('rosePreviewTitle');
+      const builder='https://wildroseautomations.ca/ai-tool-mockup-final.html';
+      form.addEventListener('submit',event=>{
+        event.preventDefault();
+        const website=input.value.trim();
+        if(!website)return;
+        let site;
+        try { site=new URL(/^https?:\/\//i.test(website)?website:`https://${website}`); }
+        catch { input.setCustomValidity('Enter a valid website address.');input.reportValidity();return; }
+        if(!['http:','https:'].includes(site.protocol)||!site.hostname.includes('.')){
+          input.setCustomValidity('Enter a public website address.');input.reportValidity();return;
+        }
+        input.setCustomValidity('');
+        window.wrFunnel?.('preview_attempt');
+        const url=new URL(builder);url.searchParams.set('website',site.href);url.searchParams.set('embed','1');
+        const inbound=new URLSearchParams(location.search);
+        ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','reachr_campaign','reachr_group','reachr_group_url','reachr_actor','reachr_attempt','reachr_job'].forEach(key=>{
+          const value=inbound.get(key);
+          if(value)url.searchParams.set(key,value);
+        });
+        title.textContent=`Building Rose for ${site.hostname}…`;
+        frame.title=`Rose website preview for ${site.hostname}`;
+        shell.hidden=false;
+        frame.src=url.href;
+        shell.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+      input.addEventListener('input',()=>input.setCustomValidity(''));
+      frame.addEventListener('load',()=>{
+        if(!shell.hidden)title.textContent=frame.src.includes('buy=1')?'Choose your Rose plan':`Rose preview for ${frame.title.replace('Rose website preview for ','')}`;
+      });
+      document.getElementById('rosePreviewClose').addEventListener('click',()=>{
+        shell.hidden=true;frame.removeAttribute('src');form.scrollIntoView({behavior:'smooth',block:'center'});
+      });
+      window.addEventListener('message',event=>{
+        if(event.origin!=='https://wildroseautomations.ca'||event.source!==frame.contentWindow||!event.data||typeof event.data!=='object')return;
+        if(event.data.type==='roseBuyView'){
+          title.textContent=event.data.active===true?'Choose your Rose plan':`Rose preview for ${frame.title.replace('Rose website preview for ','')}`;
+          shell.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+        if(event.data.type==='roseOpenBuy'){
+          try {
+            const target=new URL(event.data.target);
+            if(target.origin!==new URL(builder).origin||target.pathname!==new URL(builder).pathname||target.searchParams.get('buy')!=='1')return;
+            title.textContent='Choose your Rose plan';
+            frame.src=target.href;
+            shell.scrollIntoView({behavior:'smooth',block:'start'});
+          } catch { /* Ignore malformed messages. */ }
+        }
+        if(event.data.type==='roseCheckoutRedirect'){
+          try {const target=new URL(event.data.target);if(target.protocol==='https:')window.location.assign(target.href)}catch { /* Ignore malformed messages. */ }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
